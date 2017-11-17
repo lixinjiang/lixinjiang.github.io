@@ -1,2 +1,3 @@
+http://www.lixinjiang.cn/oracle优化之标量子查询与left-join.html
+http://www.lixinjiang.cn/Thread-safe.html
 http://www.lixinjiang.cn/easyui-problem.html
-http://www.lixinjiang.cn/my-first-blog.html
