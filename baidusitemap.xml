@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>http://www.lixinjiang.cn/2017/11/14/Thread-safe/</loc>
+    <lastmod>2017-11-20T05:33:11.838Z</lastmod>
+    <data>
+        <display>
+        <title>谈谈Struts2、SpringMvc、Srping相关的线程安全问题</title>
+        <pubTime>2017-11-14T01:15:53.000Z</pubTime>
+        
+        <tag>struts2</tag>
+         
+        <tag>springmvc</tag>
+         
+        <tag>线程安全</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.lixinjiang.cn/2017/11/01/easyui-problem/</loc>
     <lastmod>2017-11-20T03:03:41.801Z</lastmod>
     <data>
@@ -29,23 +50,6 @@
         <pubTime>2017-11-17T09:15:48.000Z</pubTime>
         
         <tag>oracle</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.lixinjiang.cn/2017/11/14/Thread-safe/</loc>
-    <lastmod>2017-11-17T11:31:26.894Z</lastmod>
-    <data>
-        <display>
-        <title>谈谈Struts2、SpringMvc、Srping相关的线程安全问题</title>
-        <pubTime>2017-11-14T01:15:53.000Z</pubTime>
-        
-        <tag>struts2</tag>
          
          
            
