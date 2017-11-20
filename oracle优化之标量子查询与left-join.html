@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/20171117.png">
 <meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711171.png">
 <meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711172.png">
-<meta property="og:updated_time" content="2017-11-17T11:24:54.146Z">
+<meta property="og:updated_time" content="2017-11-20T02:39:28.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle优化之标量子查询与left join">
 <meta name="twitter:description" content="oracle优化之标量子查询、left join">
@@ -208,7 +208,7 @@ var _hmt = _hmt || [];
 	<div id="toc-article" class="toc-article">
 	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 		<strong class="toc-title">文章目录</strong>
-           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#标量子查询"><span class="toc-number">1.</span> <span class="toc-text">标量子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用LEFT-JOIN优化标量子查询"><span class="toc-number">2.</span> <span class="toc-text">使用LEFT JOIN优化标量子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用LEFT-JOIN优化标量子查询之聚合改写"><span class="toc-number">3.</span> <span class="toc-text">用LEFT JOIN优化标量子查询之聚合改写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用LEFT-JOIN及行转列优化标量子查询"><span class="toc-number">4.</span> <span class="toc-text">使用LEFT JOIN及行转列优化标量子查询</span></a></li></ol>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#标量子查询"><span class="toc-number">1.</span> <span class="toc-text">标量子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用LEFT-JOIN优化标量子查询"><span class="toc-number">2.</span> <span class="toc-text">使用LEFT JOIN优化标量子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用LEFT-JOIN优化标量子查询之聚合改写"><span class="toc-number">3.</span> <span class="toc-text">用LEFT JOIN优化标量子查询之聚合改写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用LEFT-JOIN及行转列优化标量子查询"><span class="toc-number">4.</span> <span class="toc-text">使用LEFT JOIN及行转列优化标量子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标量中与ROWNUM-1"><span class="toc-number">5.</span> <span class="toc-text">标量中与ROWNUM=1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不等连接的标量子查询改写（一）"><span class="toc-number">6.</span> <span class="toc-text">不等连接的标量子查询改写（一）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不等连接的标量子查询改写-二"><span class="toc-number">7.</span> <span class="toc-text">不等连接的标量子查询改写(二)</span></a></li></ol>
          </div>
    <script type="text/javascript">
 	function showToc(){
@@ -231,6 +231,7 @@ var _hmt = _hmt || [];
         <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711173.jpg" alt="大图"><br><strong>oracle优化之标量子查询、left join</strong></p>
 <hr>
 <a id="more"></a>
+<p>（注：采用MarkdownPad编辑器，对hexo表格语法研究还不是很深，加入表格后，多行代码插入无效，所以全采用单行代码导致不够美观，需要验证的sql语句可复制下来在sqldeveloper中或者其他工具美化后再阅读）<br>本文是阅读相关书籍和博客结合项目中遇到的问题总结，不足之处或有疑问处还望指出，共同交流，抱拳(^_^==)。</p>
 <h2 id="标量子查询"><a href="#标量子查询" class="headerlink" title="标量子查询"></a>标量子查询</h2><p>举个栗子：</p>
 <pre><code>select empno,
        ename,
@@ -238,7 +239,7 @@ var _hmt = _hmt || [];
        deptno,
        (select d.dname from dept d where d.deptno = e.deptno) as dname
   from emp e;
-</code></pre><p><img src="http://oyw3pbvc2.bkt.clouddn.com/20171117.png" alt="执行计划"><br>通过执行计划可以看到，标量子查询中的语句实际是执行：<br><code>select d.dname from dept d where d.deptno = :B1</code><br>只是针对emp的每一行，：B1取值不同，这时执行计划只有这一种。等价于<br><code>e left join d</code><br>验证：<br><code>insert into emp (empno, deptno) values (9999, null);</code><br>这时上面的查询数据会返回十五条数据：  </p>
+</code></pre><p><img src="http://oyw3pbvc2.bkt.clouddn.com/20171117.png" alt="执行计划"><br>通过执行计划可以看到，标量子查询中的语句实际是执行：<br><code>select d.dname from dept d where d.deptno = :B1</code><br>只是针对emp的每一行，：B1取值不同，这时执行计划只有这一种。等价于<br><code>e left join d</code><br>验证：<br><code>insert into emp (empno, deptno) values (9999, null);</code><br>这时上面的查询数据会返回十五条数据：</p>
 <table>
 <thead>
 <tr>
@@ -286,7 +287,74 @@ var _hmt = _hmt || [];
         LEFT JOIN dept d ON (d.deptno = e.deptno);</code><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711172.png" alt="执行计划"><br>可以看到，改成了JOIN后有两种PLAN可供选择，这样优化的余地就大了一些。<br>改写成LEFT JOIN后，PLAN里会显示OUTER关键字，如果PLAN里没有这个关键字，就需要注意是否改写错了。</p>
 <h2 id="使用LEFT-JOIN优化标量子查询"><a href="#使用LEFT-JOIN优化标量子查询" class="headerlink" title="使用LEFT JOIN优化标量子查询"></a>使用LEFT JOIN优化标量子查询</h2><p>建议：如果未经测试，尽量不要使用标量子查询，特别是多次访问同一个表的时候，标量子查询使用后，会发现其实是一个基于left join的查询，会出现查询数据不准确的情况，而且数据大的时候，会出现查询的性能问题。<br><code>SELECT s.sid,s.sname,s.shot,s.stype,</code><br><code>(SELECT a.aid FROM a WHERE a.aid = s.aids) aid,</code><br><code>(SELECT a.aname FROM a WHERE a.aid = s.aids) aname</code><br><code>(SELECT a.atime FROM a WHERE a.aid = s.aids) aatime</code><br><code>FROM s</code><br>可以看到，在改标量子查询中，对a表访问了三次，而且关联条件一样。对于这种查询，一般直接改为LEFT JOIN的方式：<br><code>SELECT s.sid,s.sname,s.shot,s.stype,a.aid,a.aname,a.aatime FROM s LEFT JOION a ON (a.aid = s.aids)</code><br>改为LEFT JOIN后，原关联条件(a.aid=s.aids)直接作为JOIN条件即可。</p>
 <h2 id="用LEFT-JOIN优化标量子查询之聚合改写"><a href="#用LEFT-JOIN优化标量子查询之聚合改写" class="headerlink" title="用LEFT JOIN优化标量子查询之聚合改写"></a>用LEFT JOIN优化标量子查询之聚合改写</h2><p>下列语句的标量子查询中有sum:<br><code>select d.department_id,d.department_name,d.location_id,nvl(</code><br><code>(select sum(e.salary) from hr.employees e where e.department_id = d.department_id),0) as sum_sal</code><br><code>) from hr.departments d</code><br>如果有如上的那样的语句，肯定会报错的。<br><code>select d.department_id,d.department_name,d.location_id,nvl(sum(e.sum_sal),0) as sum_sal from hr.departments d left join hr.employees e on ( e.department_id = d.department_id);ORA-0094:&quot;E&quot;.&quot;SUM_SAL&quot;:标识符无效</code><br>a.要先分组汇总改成内联视图，GROUP BY后面的列就是关联列（department_id）。原标量子查询改写为：<br><code>select e.department_id,sum(e.salary) as sum_sal from hr.employees e group by e.department_id</code><br>b.要左联改写后的内联视图：<br><code>SELECT d.department_id,</code><br><code>d.department_name,</code><br><code>d.location_id,</code><br><code>nvl(e.sum_sal,0) AS sum_sal</code><br><code>FROM hr.departments d</code><br><code>LEFT JOIN (SELECT e.department_id,SUM(e.salary) AS sum_sal</code><br><code>FROM hr.employee e</code><br>    <code>GROUP BY e.deparment_id) e ON (e.department_id =</code><br><code>d.department_id);</code><br>注意：<br>a&gt;除非能根据业务逻辑判断使用INNER JOIN,否则标量子查询改写为JOIN时都要改写为LEFT JOIN。<br>b&gt;如果需要GROUP BY,要注意：先汇总，后关联。<br>观察更改前后的执行计划可以分辨出结果。熟悉执行计划的，可以对比改写前后的执行计划，不熟悉的可以对比改写前后的执行时间，注意的是，以返回所有数据的时间为准，而不是PL/SQL里只返回前几行的时间。  </p>
-<h2 id="使用LEFT-JOIN及行转列优化标量子查询"><a href="#使用LEFT-JOIN及行转列优化标量子查询" class="headerlink" title="使用LEFT JOIN及行转列优化标量子查询"></a>使用LEFT JOIN及行转列优化标量子查询</h2><p>需求：多个标量访问一个表，但是返回的是同一个列的值，只是条件不一样。<br><code>SELECT /*省略部分返回列*/</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;1&#39; and f2.umum = f4101.imuoml )as m3,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;2&#39; and f2.umum = f4101.imuoml )as kg,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;3&#39; and f2.umum = f4101.imuoml )as kn,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;4&#39; and f2.umum = f4101.imuoml )as mh,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;5&#39; and f2.umum = f4101.imuoml )as ml,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;6&#39; and f2.umum = f4101.imuoml )as mw,</code><br><code>(select max(bpuprc)/10000 from f4016 where trim(bpmcu) = &#39;zx10&#39; and bpcrcd = &#39;cny&#39; and f4106.bplitm = f4101.imlitm ) bpuprc from</code><br><code>f4101,f4102 where f4101.imitm = f4102.ibitm and f4101.imlitm=f4102.iblitm and ibmcu &lt;&gt; &#39;    zx10&#39; and imdscl not like &#39;%取消%&#39; and</code><br><code>(imsrp5 in (&#39;1&#39;,&#39;6&#39;) or imsrp3 in(&#39;37&#39;,&#39;38&#39;) or iblitm in (&#39;506000040&#39;) and trim(ibmcu) = &#39;sf10&#39;);</code><br>可看出在这个查询里面，通过标量子查询对F4101访问了6次，这里即使不考虑CBO计划的对错，仅是六次的查询如果是大表，也绝对会让人崩溃。上面这几个标量子查询关联条件都一样，所以可以先合并成为一个内联视图，再用left join。<br>几个标量子查询除访问的表（F2）Y与关联条件外，至于m的取值不同。为了使用一个子查询把这些列需要的数据都查出来，则需要使用到CASE WHEN 语句，那么这几个标量子查询合并后的语句就是：<br><code>select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then row(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then row(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then row(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then row(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then row(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then row(v,2) end) as mw,</code><br><code>from f2</code><br><code>group by umitm,umum</code><br>f2中的列umitm、umum都是关联列，所以都需要再子查询中列出，以便进行关联。<br>把上面的这个语句作为内联视图与主表进行关联，ON后面直接放关联条件（f2.umitm=f4101.imitm and f2.umum = f4101.imuomi）,就是以下语句：<br><code>select /*省略部分返回列*/</code><br><code>from f4101</code><br><code>inner join f4102 on (f4101.imitm = f4102.ibitm and f4101.imlitm = f4102.iblitm)</code><br><code>left join (select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then round(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then round(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then round(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then round(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then round(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then round(v,2) end) as mw</code><br><code>from f2</code><br><code>group by umitm,umum) f2 on(f2.umitm=f4101.imitm and f2.umum</code><br><code>=f4101.imuoml)</code><br><code>left join(select bplitm,max(bpuprc) / 10000 as bpuprc</code><br><code>from f4106</code><br><code>where trim(bpmcu) = &#39;zx10&#39;</code><br><code>and bpcrcd = &#39;cny&#39;</code><br><code>group by bplitm) f4101 on f4106.bplitm = f4101.imlitm</code><br><code>where ibmcu &lt;&gt; &#39;   zx10&#39;</code><br><code>and imdscl not like &#39;%取消%&#39;</code><br><code>and (imsrp5 in(&#39;1&#39;,&#39;6&#39;) or imsrp3 in (&#39;37&#39;,&#39;38&#39;) or</code><br><code>iblitm in (&#39;506000040&#39;) and trim (ibmcu) = &#39;sf10&#39;);</code><br>测试发现，改后的查询速度由30分钟下降到2分钟。  </p>
+<h2 id="使用LEFT-JOIN及行转列优化标量子查询"><a href="#使用LEFT-JOIN及行转列优化标量子查询" class="headerlink" title="使用LEFT JOIN及行转列优化标量子查询"></a>使用LEFT JOIN及行转列优化标量子查询</h2><p>需求：多个标量访问一个表，但是返回的是同一个列的值，只是条件不一样。<br><code>SELECT /*省略部分返回列*/</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;1&#39; and f2.umum = f4101.imuoml )as m3,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;2&#39; and f2.umum = f4101.imuoml )as kg,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;3&#39; and f2.umum = f4101.imuoml )as kn,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;4&#39; and f2.umum = f4101.imuoml )as mh,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;5&#39; and f2.umum = f4101.imuoml )as ml,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;6&#39; and f2.umum = f4101.imuoml )as mw,</code><br><code>(select max(bpuprc)/10000 from f4016 where trim(bpmcu) = &#39;zx10&#39; and bpcrcd = &#39;cny&#39; and f4106.bplitm = f4101.imlitm ) bpuprc from</code><br><code>f4101,f4102 where f4101.imitm = f4102.ibitm and f4101.imlitm=f4102.iblitm and ibmcu &lt;&gt; &#39;    zx10&#39; and imdscl not like &#39;%取消%&#39; and</code><br><code>(imsrp5 in (&#39;1&#39;,&#39;6&#39;) or imsrp3 in(&#39;37&#39;,&#39;38&#39;) or iblitm in (&#39;506000040&#39;) and trim(ibmcu) = &#39;sf10&#39;);</code><br>可看出在这个查询里面，通过标量子查询对F4101访问了6次，这里即使不考虑CBO计划的对错，仅是六次的查询如果是大表，也绝对会让人崩溃。上面这几个标量子查询关联条件都一样，所以可以先合并成为一个内联视图，再用left join。<br>几个标量子查询除访问的表（F2）Y与关联条件外，至于m的取值不同。为了使用一个子查询把这些列需要的数据都查出来，则需要使用到CASE WHEN 语句，那么这几个标量子查询合并后的语句就是：<br><code>select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then row(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then row(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then row(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then row(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then row(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then row(v,2) end) as mw,</code><br><code>from f2</code><br><code>group by umitm,umum</code><br>f2中的列umitm、umum都是关联列，所以都需要再子查询中列出，以便进行关联。<br>把上面的这个语句作为内联视图与主表进行关联，ON后面直接放关联条件（f2.umitm=f4101.imitm and f2.umum = f4101.imuomi）,就是以下语句：<br><code>select /*省略部分返回列*/</code><br><code>from f4101</code><br><code>inner join f4102 on (f4101.imitm = f4102.ibitm and f4101.imlitm = f4102.iblitm)</code><br><code>left join (select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then round(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then round(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then round(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then round(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then round(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then round(v,2) end) as mw</code><br><code>from f2</code><br><code>group by umitm,umum) f2 on(f2.umitm=f4101.imitm and f2.umum</code><br><code>=f4101.imuoml)</code><br><code>left join(select bplitm,max(bpuprc) / 10000 as bpuprc</code><br><code>from f4106</code><br><code>where trim(bpmcu) = &#39;zx10&#39;</code><br><code>and bpcrcd = &#39;cny&#39;</code><br><code>group by bplitm) f4101 on f4106.bplitm = f4101.imlitm</code><br><code>where ibmcu &lt;&gt; &#39;   zx10&#39;</code><br><code>and imdscl not like &#39;%取消%&#39;</code><br><code>and (imsrp5 in(&#39;1&#39;,&#39;6&#39;) or imsrp3 in (&#39;37&#39;,&#39;38&#39;) or</code><br><code>iblitm in (&#39;506000040&#39;) and trim (ibmcu) = &#39;sf10&#39;);</code><br>测试发现，改后的查询速度由30分钟下降到2分钟。</p>
+<h2 id="标量中与ROWNUM-1"><a href="#标量中与ROWNUM-1" class="headerlink" title="标量中与ROWNUM=1"></a>标量中与ROWNUM=1</h2><p>有时候标量汇总会有ROWNUM=1这样的条件语句：<br><code>select s.sid,s.sname,(select cid from b where b.sid = s.sid and b.status in (&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;6&#39; and rownum = 1) cid,</code><br><code>(select cid from b where b.xid = s.sid and b.status in(&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;8&#39; and rownum = 1) ringcid,</code><br><code>(select cid from b where b.sid = s.sid and b.status in (&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;1&#39; and rownum = 1) mvcid</code><br><code>from s where 1 = 1</code><br><code>and exists(select 1 from b c where c.sid = s.sid and status in （&#39;1&#39;,&#39;3&#39;)</code><br><code>and rownum = 1) and not exists( select 1 from b c where c.sstype = &#39;8&#39; and</code><br><code>c.price = &#39;0&#39; and c.distributionarea != &#39;99&#39; and c.distributionarea is not null and s.sid = c.sid</code><br>这条语句语句中，含有rownum，与普通的标量子查询不同。这种不加排序的子句直接使用rownum=1的查询，本身就是对数据要求不严格，可以看一个栗子：<br><code>select deptno, dname, (select ename from emp e where e.deptno = d.deptno</code><br><code>and rownum=1)as ename from dept d;</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">DEPTNO</th>
+<th style="text-align:right">DNAME</th>
+<th style="text-align:right">ENAME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10</td>
+<td style="text-align:right">ACCOUNTING</td>
+<td style="text-align:right">CLARK</td>
+</tr>
+<tr>
+<td style="text-align:right">20</td>
+<td style="text-align:right">RESEARCH</td>
+<td style="text-align:right">SMITH</td>
+</tr>
+<tr>
+<td style="text-align:right">30</td>
+<td style="text-align:right">SALES</td>
+<td style="text-align:right">ALLEN</td>
+</tr>
+<tr>
+<td style="text-align:right">40</td>
+<td style="text-align:right">OPERATIONS</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<p>4 ROWS SELECTED<br>这个栗子，是”rownum = 1”的，返回emp中的一条数据，不更改子查询，只需增加一个索引：<br><code>create index idx_emp_2 on emp(deptno,ename);</code><br>在直接执行上面的查询语句:  </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">DEPTNO</th>
+<th style="text-align:right">DNAME</th>
+<th style="text-align:right">ENAME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10</td>
+<td style="text-align:right">ACCOUNTING</td>
+<td style="text-align:right">CLARK</td>
+</tr>
+<tr>
+<td style="text-align:right">20</td>
+<td style="text-align:right">RESEARCH</td>
+<td style="text-align:right">ADAMS</td>
+</tr>
+<tr>
+<td style="text-align:right">30</td>
+<td style="text-align:right">SALES</td>
+<td style="text-align:right">ALLEN</td>
+</tr>
+<tr>
+<td style="text-align:right">40</td>
+<td style="text-align:right">OPERATIONS</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<p>4 rows selected<br>看出，部门20返回值改变了。<br>查询本身对返回值的要求不严格，所以只要达到它的另一个特性（最多返回一行）就可以，上面的标量语句可以改写为：<br><code>(select max(cid from b where b.sid = s.sid and b.status in(&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;6&#39;) cid,</code><br><code>(select max(cid from b where b.xid = s.sid and b.status in(&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;8&#39;) ringcid,</code><br><code>(select max(cid from b where b.sid = s.sid and b.status in (&#39;1&#39;,&#39;3&#39;)</code><br><code>and b.sstype = &#39;1&#39;) mvcid</code><br>增加了聚合函数max，去掉条件rownum=1，可以保证同样的数据返回同样的结果。接下来，用一个查询返回上面三列以及联列的信息。<br>吧同样的条件放在where后面，不同的条件放入CASE WHEN中:<br><code>select c.sid,</code><br><code>max(case when c.sstype = &#39;1&#39; then cid end) as mvcid,</code><br><code>max(case when c.sstype = &#39;8&#39; then cid end) as ringcid,</code><br><code>max(case when c.sstype = &#39;6&#39; then cid end) as cid</code><br><code>from b c where status in (&#39;1&#39;,&#39;3&#39;)</code><br><code>group by c.sid;</code><br>这就是一个行转列语句，注意不要忘记返回关联列。<br>然后左联上面的结果就可以：<br><code>select s.sid,s.sname,c.cid,c.ringcid,c.mvcid from s inner join(</code><br><code>select c.sid,max(case when c.sstype=&#39;1&#39; then cid end) as mvcid,</code><br><code>max(case when c.sstype = &#39;8&#39; then cid end) as ringcid,</code><br><code>max(case when c.sstype = &#39;6&#39; then cid end) as cid</code><br><code>from b c where status in (&#39;1&#39;,&#39;3&#39;)</code><br><code>group by c.sid) c on (c.sid = s.sid)</code><br><code>where 1=1</code><br><code>and not exists(select 1 from b c where c.sstype = &#39;8&#39; and c.price = &#39;0&#39;</code><br><code>and c.distributionarea != &#39;99&#39; and c.distributionarea is not null and s.sid = c.sid</code></p>
+<h2 id="不等连接的标量子查询改写（一）"><a href="#不等连接的标量子查询改写（一）" class="headerlink" title="不等连接的标量子查询改写（一）"></a>不等连接的标量子查询改写（一）</h2><p>之前都是等值的关联条件，所以改写为LEFT JOIN或汇总后再用LEFT JOIN。但如果关联条件中有不等连续呢？<br><code>select a.licenceid,a.data_source,a.street,</code><br><code>(select min(contdate) from ct where ct.licenceid = a.licenceid</code><br><code>and ct.data_source = a.data_source</code><br><code>and trunc(contdate) &gt;= a.opensaledate) as mincontdate,</code><br><code>(select min(buydate) from ct where ct.licenceid = a.licenceid and ct.data_source=a.data_source</code><br><code>and trunc(buydate) &gt;= a.opensaledate) as minbuydate from a</code><br>有些改写方法是先内联视图里面分组汇总并返回关联列，并联列放在LEFT JOIN —on后面。但是要注意这个栗子的关联条件有不等条件”ct2.mincontdate&gt;=a.opensaledate”及”ct2.minbuydate&gt;=a.opensaledate”,而且这两个条件实在不同的标量里面。所以这个改写会有两个错误：<br>1.把两个标量子查询的不同条件用and合并在一起，条件不对。<br>1.原查询时通过不等条件过滤后取最值，改写后是先去取最值，再过滤，执行顺序不对。<br>我们改写时一定要注意等价改写的原则，可以是逻辑等价甚至是业务等价。当然，后者要熟悉业务才行。<br>所以要想把上面的两个标量合并，必须要先与a表关联，这样才能在取最值前过滤，然后左联就可以了：<br><code>with ct2 as (select a.rowid as rid,min(case when trunc(ct.contdate)&gt;=a.opensaledate then</code><br><code>ct.contdate end) as mincontdate,min(case when trunc(ct.buydate) &gt;= a.opensaledaate then ct.buydate</code><br><code>end) as minbuydate from ct inner join a on (ct.licenceid = a.licenceid and ct.data_source =)</code><br><code>a.data_source） group by a.rowid) select a.licenceid,a.data_source,a.street,ct2.mincontdate as mincontdate,ct2.minbuydate as minbuydate</code><br><code>from a left join ct2 on(ct2.rid = a.rowid)</code></p>
+<h2 id="不等连接的标量子查询改写-二"><a href="#不等连接的标量子查询改写-二" class="headerlink" title="不等连接的标量子查询改写(二)"></a>不等连接的标量子查询改写(二)</h2><p>上面的栗子，主表没有过滤条件，而更多的栗子是主表中有过滤条件，而且能过过滤大部分的数据，这时候如果像上面那样改写会产生不必要的访问量。<br><code>select s.stkcode,t.mktcode,t.stype,t.sname,(select sum(c.hsl) from c where c.stkcode = s.stkcode and c.mktcode=t.mktcode</code><br><code>and c.calcdate between to_char(to_date(s.tdate,&#39;yyyymmdd&#39;)-365,&#39;yyyymmdd&#39;) and s.tdate) as f1,</code><br><code>(select decode(count(c.calcdate),0,null,sum(c.hsl)/count(c.calcdate)) from c</code><br><code>where c.stkcode = s.stkcode and c.mktcode = t.mktcode and c.calcdate between to_char(to_date(s.tdate,&#39;yyyymmdd&#39;)-365,&#39;yyyymmdd&#39;) and s.tdate) as f2,</code><br><code>s.tdate from s,t where s.stkcode = t.scode and t.status = 1 and t.stype = 2 and t.stdate&gt;=to_number</code><br><code>(to_char(sysdate-3,&#39;yyyymmdd&#39;));</code><br>这种标量有两种改法：<br>1.把标量数据单独提出来与主表进行JOIN操作，因有区间条件，这时主表就要做两次join<br>2.主表直接与标量进行join操作，然后汇总数据<br>两种改写方法都要把主查询放在WITH语句中：<br><code>with t0 as (select rownum as sn,s.stkcode,t.mkcode,t.stype,t.sname,s.tdate)</code><br><code>from s,t where s.stkcode=t.scode and t.status = 1 and t.stype=2 and s.tdate&gt;=to_number(to_char(sysdate-3,&#39;YYYYMMDD&#39;)))</code><br>因为这个语句中有两个表，不能返回rowid，所以在这里使用rownum as sn当做唯一标识。<br>改写一：先分组汇总，再关联，与主表（这里改写成了WITH里的t0）关联汇总后的数据放在内联视图中，然后在于主表做关联。<br>改写二：先关联，再汇总。<br>这两种改写方法效率区别就在于是用group组合多列耗费的时多还是用group组合单列后，再用join耗费的时间多，这与表中的数据多少有关系，如果不能确定，这两种方式都可测试一下。</p>
 
       
 
@@ -538,11 +606,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">easyui</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">easyui</a>
               </li>
              
               <li class="article-tag-list-item">
