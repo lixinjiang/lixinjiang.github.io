@@ -4,8 +4,27 @@
 
     
   <url>
+    <loc>http://www.lixinjiang.cn/2017/11/23/pos%E5%BA%94%E7%94%A8/</loc>
+    <lastmod>2017-11-23T03:47:43.572Z</lastmod>
+    <data>
+        <display>
+        <title>Pos应用与扫盲一路通</title>
+        <pubTime>2017-11-23T01:19:56.000Z</pubTime>
+        
+        <tag>随笔</tag>
+         
+        <tag>Pos</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.lixinjiang.cn/2017/11/14/Thread-safe/</loc>
-    <lastmod>2017-11-20T05:33:11.838Z</lastmod>
+    <lastmod>2017-11-20T07:16:48.632Z</lastmod>
     <data>
         <display>
         <title>谈谈Struts2、SpringMvc、Srping相关的线程安全问题</title>

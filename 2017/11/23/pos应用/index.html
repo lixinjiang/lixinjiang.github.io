@@ -6,14 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.lixinjiang.cn">
-  <title>Tag: oracle | Blog</title>
+  <title>Pos应用与扫盲一路通 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="http://www.lixinjiang.cn/tags/oracle/index.html">
+  <meta name="description" content="作为一个金融支付行业人员，pos行业背景和应用必须要知道，这篇文章就介绍下pos的相关知识。">
+<meta name="keywords" content="随笔,Pos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pos应用与扫盲一路通">
+<meta property="og:url" content="http://www.lixinjiang.cn/2017/11/23/pos应用/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="作为一个金融支付行业人员，pos行业背景和应用必须要知道，这篇文章就介绍下pos的相关知识。">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711231.jpg">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711232.jpeg">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711233.jpeg">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711234.jpeg">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711235.jpeg">
+<meta property="og:updated_time" content="2017-11-23T03:47:43.572Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
+<meta name="twitter:title" content="Pos应用与扫盲一路通">
+<meta name="twitter:description" content="作为一个金融支付行业人员，pos行业背景和应用必须要知道，这篇文章就介绍下pos的相关知识。">
+<meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711231.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -172,60 +183,252 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-pos应用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/17/oracle优化之标量子查询与left-join/" class="archive-article-date">
-  	<time datetime="2017-11-17T09:15:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/17/oracle优化之标量子查询与left-join/">oracle优化之标量子查询与left join</a>
+    <h1 class="article-title" itemprop="name">
+      Pos应用与扫盲一路通
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/11/23/pos应用/" class="archive-article-date">
+  	<time datetime="2017-11-23T01:19:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-23</time>
+</a>
+        
+      </header>
+    
+<!-- 目录内容 -->
+
+    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+          <span class="btn-bg"></span>
+          <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正文"><span class="toc-number">3.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#行业发展概况"><span class="toc-number">3.1.</span> <span class="toc-text">行业发展概况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#POS机历程"><span class="toc-number">3.1.1.</span> <span class="toc-text">POS机历程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组装POS"><span class="toc-number">3.1.2.</span> <span class="toc-text">组装POS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新型MPOS"><span class="toc-number">3.1.3.</span> <span class="toc-text">新型MPOS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POS概念"><span class="toc-number">3.2.</span> <span class="toc-text">POS概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是POS"><span class="toc-number">3.2.1.</span> <span class="toc-text">什么是POS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能用途"><span class="toc-number">3.2.2.</span> <span class="toc-text">功能用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#商家为什么使用POS"><span class="toc-number">3.3.</span> <span class="toc-text">商家为什么使用POS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、在企业管理中需要大量的信息和数据"><span class="toc-number">3.3.1.</span> <span class="toc-text">一、在企业管理中需要大量的信息和数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、装POS有诸多多好处"><span class="toc-number">3.3.2.</span> <span class="toc-text">二、装POS有诸多多好处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、带来的收益"><span class="toc-number">3.3.3.</span> <span class="toc-text">三、带来的收益</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POS基础业务"><span class="toc-number">3.4.</span> <span class="toc-text">POS基础业务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#风控"><span class="toc-number">3.4.1.</span> <span class="toc-text">风控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调单"><span class="toc-number">3.4.2.</span> <span class="toc-text">调单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#触发调单情况"><span class="toc-number">3.4.3.</span> <span class="toc-text">触发调单情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小票签名"><span class="toc-number">3.4.4.</span> <span class="toc-text">小票签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#盗刷"><span class="toc-number">3.4.5.</span> <span class="toc-text">盗刷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复制卡、伪卡、黑卡"><span class="toc-number">3.4.6.</span> <span class="toc-text">复制卡、伪卡、黑卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拒付"><span class="toc-number">3.4.7.</span> <span class="toc-text">拒付</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#持卡人拒付"><span class="toc-number">3.4.7.1.</span> <span class="toc-text">持卡人拒付</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发卡行-发卡机构拒付"><span class="toc-number">3.4.7.2.</span> <span class="toc-text">发卡行/发卡机构拒付</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消费冲正"><span class="toc-number">3.4.8.</span> <span class="toc-text">消费冲正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#银联"><span class="toc-number">3.4.9.</span> <span class="toc-text">银联</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#银联商务"><span class="toc-number">3.4.10.</span> <span class="toc-text">银联商务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备付金"><span class="toc-number">3.4.11.</span> <span class="toc-text">备付金</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#追偿"><span class="toc-number">3.4.12.</span> <span class="toc-text">追偿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清算"><span class="toc-number">3.4.13.</span> <span class="toc-text">清算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第三方支付清结算系统清分、对账（信息流）"><span class="toc-number">3.4.13.1.</span> <span class="toc-text">第三方支付清结算系统清分、对账（信息流）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结算（资金流）：将实际的资金付出去"><span class="toc-number">3.4.13.2.</span> <span class="toc-text">结算（资金流）：将实际的资金付出去</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三方支付在结算资金出款时候，核心的思路："><span class="toc-number">3.4.14.</span> <span class="toc-text">第三方支付在结算资金出款时候，核心的思路：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MPOS"><span class="toc-number">3.5.</span> <span class="toc-text">MPOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">3.6.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711231.jpg" alt="大图"><br><br>　　作为一个金融支付行业人员，pos行业背景和应用必须要知道，这篇文章就介绍下pos的相关知识。<br><a id="more"></a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>　　最近在接触MPOS业务中的一个小功能，出于兴趣而且从事金融行业的开发，作为一个开发者，如果对业务更熟悉，那么开发出的产品会更贴近用户，用户体验、功能和收益也会大有好处，因而想把POS这方便的知识进行系统的扫盲，增加自己的知识广度。搜索阅读了一些资料，大体上来说有了一个认识，分享给大家，毕竟不是专业内的，不足之处欢迎交流指正。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>　　随着国内消费水平的不断提升和消费意识的增强，电子支付正日益成为人们日常生活中不可或缺的组成部分。目前，POS行业已进入稳定增长期。但我国人均拥有POS机数量远低于国外，所以可开发市场空间广阔。随着电子商务的发展和人们日常的消费习惯，刷卡已成为不可抵挡的趋势。<br><br>　　在这网络无处不在的时代，金融业务已呈现出高度电子化和网络化的趋势，在金融电子化的构成当中，支付工具电子化今年来在我国得到迅速的发展。随着电话POS支付在终端机具、平台系统应用模式市场培育客户接受程度等方面的成熟，目前POS已经被广泛应用于商场、超市、批发场中小商贸流通企业，智能MPOS、传统POS、电话POS、ATM并驾齐驱的主流电子支付渠道也在壮大发展。<br><br>　　截止到2013年年底，全国已累积发行43亿张银行卡，消费者用卡习惯已经成熟；同时，全国小微企业数量达到7000万，但拥有POS机的商户却不足300万，这意味着有95%的市场处于空白状态，而受理商户数量和交易金额也在迅速增加。业界人士预计，未来三年POS机收单业务将持续呈井喷式发展，市场规模将增长5-6倍，可谓“钱”景广阔。<br><br><strong>疑问：为什么要使用POS，POS存在的意义？</strong></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="行业发展概况"><a href="#行业发展概况" class="headerlink" title="行业发展概况"></a>行业发展概况</h2><h3 id="POS机历程"><a href="#POS机历程" class="headerlink" title="POS机历程"></a>POS机历程</h3><p>　　上个世纪九十年代，由于POS机价格偏高，软件不成熟，除了一些特大型商场使用外，其它企业很难负担起使用POS机的费用，同时，在管理上也处于初级阶段，客观上不需要强大的计算机信息管理。于是使用一、二代收款机，采用总线方式联网，曾经风行一时，当时的代表是北京四通公司的202A收款机与NCR2113，同时对于一些小型用户他们选择使用具有基本功能的一代收款机。</p>
+<h3 id="组装POS"><a href="#组装POS" class="headerlink" title="组装POS"></a>组装POS</h3><p>　　九十年代未，由于世界IT技术的迅速发展，PC配件的质量有了迅速提高，DIY在IT业是一种世界流行的组装做法，模块化的技术，为组装POS提供了更加广阔的选择余地。由于组装POS机定位为低端市场，商家更多考虑的是成本本身，对机器质量的考虑较少，产品性能良莠不齐。</p>
+<h3 id="新型MPOS"><a href="#新型MPOS" class="headerlink" title="新型MPOS"></a>新型MPOS</h3><p>　　随着信息技术在零售企业的广泛应用，客户对管理功能需求的增加使要求向上不断攀升，而高昂的价格却令到商家止步。对于信息技术的普及，商业零售需要高性能、高品质、稳定的机器来进行收单服务，POS机新产品也开始高度集成新功能，以应对市场需求，为了省去连线带来的不便性，MPOS就应用而生。</p>
+<h2 id="POS概念"><a href="#POS概念" class="headerlink" title="POS概念"></a>POS概念</h2><h3 id="什么是POS"><a href="#什么是POS" class="headerlink" title="什么是POS"></a>什么是POS</h3><p>　　有两种机器都叫POS，用途不同。一种是刷卡结账用的，就是不用付现金，从顾客的信用卡上刷钱用的，由银行赔个商家。还有一种是商场的收费终端的总称，商场超市的收银台安装的就是这种POS机，用来做结账处理，是商场ERP管理系统的重要组成部分。  </p>
+<blockquote>
+<p>POS（Pointofsales）的中文意思是“销售点”，全称为销售点情报管理系统，是一种配有条码或OCR码技终端阅读器，有现金或易货额度出纳功能。其主要任务是对商品与媒体交易提供数据服务和管理功能，并进行非现金结算。</p>
+</blockquote>
+<h3 id="功能用途"><a href="#功能用途" class="headerlink" title="功能用途"></a>功能用途</h3><p>　　适用于大、中型超市、连锁店、大卖场、大、中型饭店及一切高水平管理的零售企业。具有IC卡功能，可使用会员卡和内部发行IC卡及有价证券。可说话客显、可外接扫描枪、打印机等多种外设。具有前、后台进、销、存配送等大型连锁超市管理功能。餐饮型具有餐饮服务功能，可外接多台厨房打印机、手持点菜机等各种外设。可实现无人看管与PC机远程通讯，下载资料。具有以太网通讯功能，通过ADSL宽带构成总、分店网络即时管理系统。</p>
+<h2 id="商家为什么使用POS"><a href="#商家为什么使用POS" class="headerlink" title="商家为什么使用POS"></a>商家为什么使用POS</h2><h3 id="一、在企业管理中需要大量的信息和数据"><a href="#一、在企业管理中需要大量的信息和数据" class="headerlink" title="一、在企业管理中需要大量的信息和数据"></a>一、在企业管理中需要大量的信息和数据</h3><p>　　1.作为超市、餐饮、专卖连锁的管理者，需要对整个企业的采购、库存、销售（零售、批发）客户资料、进行全方位的精细化管理；而精细化管理必须以数据报表作为支撑；<br><br>　　2.作为超市、餐饮、专卖连锁的管理者，需要对整个企业的采购、库存、销售（零售、批发）客户资料、进行全方位的精细化管理；而精细化管理必须以数据报表作为支撑；<br><br>　　3.并且企业的业务流程中需要相关部门提供信息与数据的报表，更好的开展业务；<br><br>　　4.快速、准确的实现收银过程；并能提高购物体验；并能提供精确的数据进行分析。</p>
+<h3 id="二、装POS有诸多多好处"><a href="#二、装POS有诸多多好处" class="headerlink" title="二、装POS有诸多多好处"></a>二、装POS有诸多多好处</h3><p>　　安装了POS机，<strong>营业额</strong>一般会增加20%！电子支付，正日益成为人们日常生活中不可或缺的组成部分。在这一巨大需求面前，国内主流金融POS厂商加速驶入发展的“快车道”。<br>　　目前，POS行业已进入<strong><em>稳定增长期</em></strong>。从POS终端的覆盖率来看，我国人均拥有POS机数量远低于国外，市场空间广阔。数据显示，中国每万人所拥有的POS机是13.7台，在美国这一数字跃升至179台，而在韩国则高达625台。<br>　　中国人民银行日益加快了银行卡产业的升级，2015年前银行磁条卡将全部更换IC卡，金融IC卡步入了快速、规模化的发展阶段。随着银行卡换“芯”，POS厂商面临新的考量：在安全方面，要求具备符合PBOC2.0和EMV2000规范的IC卡读卡器，整机安全（包括终端主机和密码键盘）得到高度重视———除了公众熟知的密码键盘外，凡是涉及到敏感信息的存储、处理与传输的各个环节，都应是安全模块。  </p>
+<h3 id="三、带来的收益"><a href="#三、带来的收益" class="headerlink" title="三、带来的收益"></a>三、带来的收益</h3><p>　　1.留住顾客：店里能够刷卡消费了，再不会因为不支持刷卡造成顾客流失；</p>
+<p>　　2.让您的生意能够面向国内银行卡30亿持有者及国际卡15亿持有者；</p>
+<p>　　3.安全：无需保留大量的现金在您的店铺里；</p>
+<p>　　4.不必要担心无效支票，收到假钞及携带大量现金到银行的危险；</p>
+<p>　　5.可避免现金操作中人为错误以及盗窃的发生；</p>
+<p>　　6.吸引更多的消费者：调查显示，大部分的商家通过收受银行卡支付可使销售额增长20%；</p>
+<p>　　7.鼓励现金短缺却又想购物的顾客进行消费；</p>
+<p>　　8.即时的后台交易数据让您随时掌控子商户的销售情况和经营状况；</p>
+<p>　　9.提升交易处理速度，提高商户资金的使用效率。</p>
+<p>　　10.便于分析店内销售数据，更加合理的进行库存管理。  </p>
+<h2 id="POS基础业务"><a href="#POS基础业务" class="headerlink" title="POS基础业务"></a>POS基础业务</h2><h3 id="风控"><a href="#风控" class="headerlink" title="风控"></a>风控</h3><p>　　指风险控制，一般的金融机构和支付公司都设有此种职位，主要采取各种措施和方法，消灭和减少风险事件发生的各种个能行，或者减少风险事件发生时造成的损失。基本方式是：风险回避、止损控制、风险转移和风险保留。</p>
+<h3 id="调单"><a href="#调单" class="headerlink" title="调单"></a>调单</h3><p>　　指收单方或银联或银行对于有争议或有风险的交易有疑问，需要调取原始交易凭证证明持卡人当时的真实交易场景，确认消费或进行责任划分凭证。常见情况是收单方要求POS机商户提交某时间段的某些交易小票，在一定的工作日之内，此交易金暂时冻结，确认后予以重新打款。</p>
+<h3 id="触发调单情况"><a href="#触发调单情况" class="headerlink" title="触发调单情况"></a>触发调单情况</h3><p>　　代理商，收单机构，发卡行，银联均可以发起调单，通常是按照其“风控标准’发起的“疑似风险交易”，比如：在非营业时间进行的交易，单卡交易过于频繁，单卡交易金额过大，存在移机交易行为等其他交易异常情况。</p>
+<h3 id="小票签名"><a href="#小票签名" class="headerlink" title="小票签名"></a>小票签名</h3><p>　　根据中国银联的相关要求，为了保证持卡人的用卡安全，持有信用卡的用户必须在自己卡片的后面签上自己的名字。根据相关规定，持卡人在刷卡后，商户一定要仔细核对银行卡上的姓名与刷卡人签名是否保持一致,如果不一致，可以取消此笔交易或发起调单不承认。若是商户不按照要求进行操作,可能会影响到刷卡人的交易资金结算。<br><br>　　在刷卡消费后，消费者需要妥善保管交易小票，作为交易的凭证，以便日后银联等监管机构进行抽查时，证明交易的真实性。如刷卡人在消费后未作保留pos机打印小票，或丢失小票，又或是因其他原因而损毁，则需要填写”消费者真实交易确认单”。</p>
+<h3 id="盗刷"><a href="#盗刷" class="headerlink" title="盗刷"></a>盗刷</h3><p>　　盗刷是指以非正常渠道获得非本人的信用卡或借记卡进行刷卡消费即是盗刷，这是严重的违法行为。</p>
+<h3 id="复制卡、伪卡、黑卡"><a href="#复制卡、伪卡、黑卡" class="headerlink" title="复制卡、伪卡、黑卡"></a>复制卡、伪卡、黑卡</h3><p>　　伪卡是指不是银行卡本人所使用的银行卡而是不法份子通过其技术手段复制出原卡信息进行违法刷卡套现的卡。这些假卡多见于磁条卡，芯片卡是很难被复制的，基本可以说不能。<br><br>　　芯片是用来计算处理数据的，不是直接读出信息的。<br><br>　　芯片卡内有一部分存储区域是不能被随便读取的，是每张卡片特有的，就算复制卡片，这片区域内的数据是不能被读取出来；做交易的时候有一个动态验证,需要终端向卡片发送随机数指令，卡片用卡内的私钥对收到的数据加上卡片内其他数据做加密运算，产生一个动态的证书，返回给终端，终端用卡片公钥解密，解密出来的数据如果格式符合银联标准的规定，才能交易成功。</p>
+<h3 id="拒付"><a href="#拒付" class="headerlink" title="拒付"></a>拒付</h3><h4 id="持卡人拒付"><a href="#持卡人拒付" class="headerlink" title="持卡人拒付"></a>持卡人拒付</h4><p>　　持卡人对该次购买的有效性存有疑虑<br><br>　　持卡人因同笔订单被重复收费<br><br>　　持卡人对买卖内容不满意，且未能与商家解决争端<br><br>　　持卡人收到的购买项目与说明不符<br><br>　　持卡人未收到自己购买的项目</p>
+<h4 id="发卡行-发卡机构拒付"><a href="#发卡行-发卡机构拒付" class="headerlink" title="发卡行/发卡机构拒付"></a>发卡行/发卡机构拒付</h4><p>　　未经授权的一方使用持卡人信用卡进行购买<br><br>　　商户未提供有效交易凭证<br><br>　　商户超过规定期限提供有效凭证<br><br>　　卡人实际消费地与凭证消费所在地不符<br><br>　　同一商户、同一终端、同一商品进行了多次同卡支付</p>
+<h3 id="消费冲正"><a href="#消费冲正" class="headerlink" title="消费冲正"></a>消费冲正</h3><p>　　一笔刷卡交易，在POS机上操作成功，在随后的联机过程中，由于POS机与银联结算中心在数据传输过程中发生故障，系统主机端没有返回交易成功提示，终端不能确定此笔交易是否成功，则重新向主机发送请求取消该笔交易的流水，主机收到请求则回滚交易，此交易金额成功冲正退回，需要重新刷卡交易，如冲正不成功，此交易会被视为失败交易，但交易发起方的账户已被划拨扣款，退款需要联系POS机提供方或收单方客服进行人工冲正将交易金退回持卡人消费的账户。</p>
+<h3 id="银联"><a href="#银联" class="headerlink" title="银联"></a>银联</h3><p>　　中国银联股份有限公司，总部设在上海。中国银联是中国银行卡联合组织，通过银联跨行交易清算系统，实现商业银行系统间的互联互通和资源共享，保证银行卡跨行、跨地区和跨境的使用。有152个股东，十余个子公司，是支付机构，更是唯一的清算组织。分别是银联国际、银联商务、银联数据服务、银联电子支付、银行卡检测中心和中金金融认证中心。<br><br>　　除了前述部门、各地区公司外，银联还有一个重要构成：包括广州银联网络支付、上海银联电子支付、深圳市银联金融网络、北京银联商务、上海银联商务、宁波银联商务、广东银联商务、北京数字王府井科技等8家子公司。除此之外，银联下属5家均没有下设子公司。</p>
+<h3 id="银联商务"><a href="#银联商务" class="headerlink" title="银联商务"></a>银联商务</h3><p>　　银联商务有限公司是中国银联有限公司的子公司，银联商务主要做银行卡收单和专业化服务。“在这里银联既是清算机构，又是支付机构。”曾担任银联要职，现在一家三方支付公司任职的知情人士表示。银联商务主要负责线下业务，线上支付银联也有涉及，子公司银联电子支付主要就负责这一块。<br><br><br>　　另外，银联商务下属子公司还有涉及网络支付、电子支付，实际上涵盖了整个支付链条。目前银联商务是国内线下银行卡收单市场占有率最大的一家第三方支付机构。</p>
+<h3 id="备付金"><a href="#备付金" class="headerlink" title="备付金"></a>备付金</h3><p>　　就我们POS行业来说，所有通过POS交易的金额款项，没有到账之前都叫备付金，字面意思就是准备支付的现金。第三方支付机构的客户备付金，是指支付机构为办理客户委托的支付业务而实际收到的预收待付货币资金。<br><br>　　任何单位和个人不得擅自挪用，占用，借用客户备付金，不得擅自以客户备付金为他人提供担保。支付机构需要在拥有资质的专业银行开设备付金账户，账户体系有存管账户，收付账户，汇缴账户。</p>
+<h3 id="追偿"><a href="#追偿" class="headerlink" title="追偿"></a>追偿</h3><p>　　支付产业链构成中，为了连接银行、商户、和消费者，出现了收单—转接—清算这种模式。而银联拥有支付跨行清算系统，收单机构如果要跟每家银行都连接的话，技术和物力成本相当高，而鉴于银联在银行间的优势，市场就基本接受了银联一家转接机构。<br><br>　　作为霸主，银联不允许第三方支付公司的线下收单业务绕开银联直连银行，有部分绕开的，或者违规套码跳码赚取差价利润的就予以追偿。对于无法核实商户真实性的所有交易，按照一般类手续费补足差价。<br><br>　　但中国银联股份有限公司作为一家商业化公司是否有资格对其他商业化公司进行处罚，在法律上这种追偿做法是毫无法律依据的，只是作为市场垄断机构的霸王条款而已。</p>
+<h3 id="清算"><a href="#清算" class="headerlink" title="清算"></a>清算</h3><p>　　银行卡清算是指银行卡持卡人用卡消费或是缴费等交易后，银行与银行、银行与受理卡片的商家之间的资金结算、转账的过程。清算包括本行对本行，也包括本行对他行，还包括银行对商户，商户对银行等。<br><br><br>　　银行卡清算是指银行卡持卡人用卡消费或是缴费等交易后，银行与银行、银行与受理卡片的商家之间的资金结算、转账的过程。清算包括本行对本行，也包括本行对他行，还包括银行对商户，商户对银行等。<br><br>　　第三方支付进行清算大致分为以下几方面：</p>
+<h4 id="第三方支付清结算系统清分、对账（信息流）"><a href="#第三方支付清结算系统清分、对账（信息流）" class="headerlink" title="第三方支付清结算系统清分、对账（信息流）"></a>第三方支付清结算系统清分、对账（信息流）</h4><p>　　在第三方支付平台完成对上游机构（银行、银联等金融机构或渠道）、商户/用户账务历史的清分、对账。</p>
+<h4 id="结算（资金流）：将实际的资金付出去"><a href="#结算（资金流）：将实际的资金付出去" class="headerlink" title="结算（资金流）：将实际的资金付出去"></a>结算（资金流）：将实际的资金付出去</h4><p>　　由于结算对象的收款银行形形色色，涉及不同的银行；同时结算的资金额度也不同，有低于五万的，有上百万的。不可能通过单一的渠道完成。一般第三方支付的代付渠道有如下一些类别：<br><br>　　超级网银：跨行，低于五万，实时到账，成本较低或免费；<br><br>　　银企直连：同行，额度没限制；<br><br>　　各地结算中信代收付渠道：本质上调用央行的大小额、同城结算系统，跨行，但具有较大的区域性；<br><br>　　企业网银：财务人员手工或半自动完成。<br><br>　　需要强调的是，央行的大小额系统、超级网银并不直接开放给第三方支付，第三方支付只能通过与银行等金融机构的合作来获得。</p>
+<h3 id="第三方支付在结算资金出款时候，核心的思路："><a href="#第三方支付在结算资金出款时候，核心的思路：" class="headerlink" title="第三方支付在结算资金出款时候，核心的思路："></a>第三方支付在结算资金出款时候，核心的思路：</h3><p>　　从能够获得的渠道资源（例如免费使用超级网银）、渠道成本、存款利息等因素综合考虑，选择一家能够银行作为存管行。<br><br>　　在不同的银行设立收付户，将跨行转账尽量变为同行转账。例如用户甲通过第三方支付从招行转账给用户乙在工行的账户300元,则：<br><br>　　用户甲通过在线支付完成300元的付款操作；<br><br>　　第三方支付平台接收到招行支付成功通知；<br><br>　　第三方支付平台通过调用工行接口（例如银企直连），从工行的自有资金账户/备付金账户转账300元给用户乙。<br><br>　　在不同的渠道间进行路由选择<br><br>　　第三方支付在结算出款时候，一般会组合以上渠道进行代付，按照金额、成本、到账时间、成功率、收款银行等要素进行路由，因此银行渠道路由系统是所有第三方支付核心的系统之一。<br><br>　　中国银联一直是中国清算市场的霸主，2015年6月国务院发布（国务院关于实施银行卡清算机构准入管理的决定），此决定意味着银联被打破了其垄断地位。</p>
+<h2 id="MPOS"><a href="#MPOS" class="headerlink" title="MPOS"></a>MPOS</h2><blockquote>
+<p>MPOS是新型支付产品，与手机、平板电脑等通用智能移动设备进行连接，通过互联网进行信息传输，外接设备完成卡片读取、PIN输入、数据加解密、提示信息显示等操作，从而实现支付功能的应用。由通过移动通讯设备(含所搭载的支付应用软件)进行商户收银操作，由外接专用受理终端完成银联卡相关信息的采集和加密，通过移动通讯设备与后台处理系统交互完成交易。</p>
+</blockquote>
+<p>　　mPOS是近几年随移动互联网的发展而得到快速普及的一种新型受理产品。<br><br>　　mPOS其实并不单指某个终端，而是一个整体概念，包括终端设备和支付应用软件。是指通过移动通讯设备进行商户收银操作，由外接专用受理终端完成银联卡相关信息的采集和加密，通过移动通讯设备与后台处理系统交互完成交易，这一过程涉及的前端专用软硬件设备总称为mPOS。<br><br>　　架构：<br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711232.jpeg" alt=""><br><br>　　传统POS较mPOS相比价格要高出许多。安全性虽然没话说，但是这略高的价格也多少会令一些小本经营的商户望而却步。mPOS的价格只有传统POS的1/3，对于小本经营商户而言无疑是一个性价比较高的选择。<br><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711233.jpeg" alt=""><br><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711234.jpeg" alt=""><br><br>　　传统POS操作界面相对比较简单，功能较为单一。mPOS由于与APP应用进行结合，提供了图形化的操作界面，交易查询、分析一目了然。<br><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711235.jpeg" alt=""></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>　　做mpos的大多数公司开始转行做聚合支付了，因为聚合支付开发成本低，不需要支付牌照。支付的通道 也多，用户可以方便灵活使用。一个手机下载一个app就可以了。<br><br>　　更多MPOS讯息，参阅这篇文章<a href="http://blog.sina.com.cn/s/blog_16888477f0102z3f3.html" title="MPOS与二维码手刷" target="_blank" rel="external">MPOS与二维码手刷</a><br><br>　　如需转载，请注明出处：（www.lixinjiang.cn/2017/11/23/pos应用/）</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你支持我买服务器<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubaozhifu.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinzhifu.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">oracle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Pos</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.lixinjiang.cn/2017/11/23/pos应用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/11/17/oracle优化之标量子查询与left-join/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">oracle优化之标量子查询与left join</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -253,9 +456,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,
