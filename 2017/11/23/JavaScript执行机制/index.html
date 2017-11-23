@@ -6,21 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.lixinjiang.cn">
-  <title>谈谈Struts2、SpringMvc、Srping相关的线程安全问题 | Blog</title>
+  <title>JavaScript执行机制 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="线程安全">
-<meta name="keywords" content="struts2,springmvc,线程安全">
+  <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="谈谈Struts2、SpringMvc、Srping相关的线程安全问题">
-<meta property="og:url" content="http://www.lixinjiang.cn/2017/11/14/Thread-safe/index.html">
+<meta property="og:title" content="JavaScript执行机制">
+<meta property="og:url" content="http://www.lixinjiang.cn/2017/11/23/JavaScript执行机制/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="线程安全">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711174.jpg">
-<meta property="og:updated_time" content="2017-11-20T07:16:48.632Z">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
+<meta property="og:updated_time" content="2017-11-23T05:58:31.835Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谈谈Struts2、SpringMvc、Srping相关的线程安全问题">
-<meta name="twitter:description" content="线程安全">
-<meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711174.jpg">
+<meta name="twitter:title" content="JavaScript执行机制">
+<meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -179,73 +176,34 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Thread-safe" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JavaScript执行机制" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      谈谈Struts2、SpringMvc、Srping相关的线程安全问题
+      JavaScript执行机制
     </h1>
   
 
         
-        <a href="/2017/11/14/Thread-safe/" class="archive-article-date">
-  	<time datetime="2017-11-14T01:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-14</time>
+        <a href="/2017/11/23/JavaScript执行机制/" class="archive-article-date">
+  	<time datetime="2017-11-23T05:45:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-23</time>
 </a>
         
       </header>
     
 <!-- 目录内容 -->
 
-    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-          <span class="btn-bg"></span>
-          <span class="btn-text">文章导航</span>
-          </p>
-	<div id="toc-article" class="toc-article">
-	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-		<strong class="toc-title">文章目录</strong>
-           <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本作用域："><span class="toc-number">1.</span> <span class="toc-text">基本作用域：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#singleton-单例"><span class="toc-number">1.1.</span> <span class="toc-text">singleton,单例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#prototype，原型作用域"><span class="toc-number">1.2.</span> <span class="toc-text">prototype，原型作用域</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web基本作用域："><span class="toc-number">2.</span> <span class="toc-text">Web基本作用域：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#request，表示每个请求需要容器创建一个全新Bean"><span class="toc-number">2.1.</span> <span class="toc-text">request，表示每个请求需要容器创建一个全新Bean</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session域"><span class="toc-number">2.2.</span> <span class="toc-text">session域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#globalSession"><span class="toc-number">2.3.</span> <span class="toc-text">globalSession</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义作用域："><span class="toc-number">3.</span> <span class="toc-text">自定义作用域：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#属性注册："><span class="toc-number">3.1.</span> <span class="toc-text">属性注册：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证："><span class="toc-number">3.2.</span> <span class="toc-text">验证：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结："><span class="toc-number">4.</span> <span class="toc-text">总结：</span></a></li></ol>
-         </div>
-   <script type="text/javascript">
-	function showToc(){
-		var toc_article = document.getElementById("toc-article");
-		var show_toc_btn = document.getElementById("show-toc-btn");
-		toc_article.setAttribute("style","display:block");
-		show_toc_btn.setAttribute("style","display:none");
-		};
-	function showBtn(){
-		var toc_article = document.getElementById("toc-article");
-		var show_toc_btn = document.getElementById("show-toc-btn");
-		toc_article.setAttribute("style","display:none");
-		show_toc_btn.setAttribute("style","display:block");
-		};
-   </script>
-      
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711174.jpg" alt="大图"><br><strong>线程安全</strong></p>
-<hr>
-<a id="more"></a>
-<p>首先理解，什么是线程安全？  </p>
+        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg" alt="大图"><br><a id="more"></a></p>
 <blockquote>
-<p>线程安全就是多线程访问时，采用了加锁机制，当一个线程访问该类的某个数据时，进行保护，其他线程不能进行访问直到该线程读取完，其他线程才可使用。不会出现数据不一致或者数据污染。 线程不安全就是不提供数据访问保护，有可能出现多个线程先后更改数据造成所得到的数据是脏数据。  —— 百度百科</p>
+<p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。</p>
 </blockquote>
-<p>相关知识可参考<a href="https://www.ibm.com/developerworks/cn/java/j-jtp09263/" target="_blank" rel="external">线程安全及其类别</a><br>简单理解就是：<strong>线程安全就是说多线程访问同一代码，不会产生不确定的结果。编写线程安全的代码是低依赖线程同步。  </strong><br>　　首先要明白线程工作原理，jvm有一个main memory，而每个线程有自己的working memory，一个线程对一个variable进行操作时，都要在自己的working memory里面建立一个copy，操作完之后再写入main memory。多线程同时操作一个variable，就可能会出现不可预知的结果。根据上面的解释，很容易想出相应的scenario。<br><br>　　而用synchronized的关键是建立一个monitor，这个monitor加锁来实现线程安全，每个线程在获得这个锁之后，要执行完load到workingmemory-&gt;use&amp;assign-&gt;store到mainmemory的过程，才会释放它得到的锁。这样就实现了所谓的线程安全。<br><br>　　接口方式中，线程有一个共享的数据成员，即：privte int count = 10;<br>继承方式中，线程之间没有共享的成员，而是各线程各自有一个私有成员，即private int count = 10;  </p>
-<p>　　在多线程环境中，当各线程不共享数据的时候，那么一定是线程安全的。问题是这种情况并不多见，在多数情况下需要共享数据，这时就需要进行适当的同步控制了。线程安全一般都涉及到synchronized就是一段代码同时只能有一个线程来操作，不然中间过程可能会产生不可预知的结果。  </p>
-<p>　　如果代码所在的进程中有多个线程在同时运行，而这些线程可能会同时运行这段代码，如果每次运行结果和单线程运行结果一样的，而其他的变量的值也和预期的一样，那么就是线程安全的。比如在ArrayList中，在添加一个元素的时候，它可能会有两步来完成，1.在Items[Size]的位置存放此元素；2.增大Size的值。<br><br>　　<strong>Struts2 Action对象管理实例，为每个请求产生一个实例，因此没有线程安全问题，但是，当把struts2交给spring管理的时候，默认是单实例的，会有线程安全问题。</strong><br><br>　　<strong>Spirng的Ioc容器管理的bean默认是单实例的，上次请求的状态信息会被保持下来，并影响下次的请求，实际就是action中的类变量被不同的请求读取，出现错误结果。就是不用单例，spring中bean的作用域设为prototype，每个请求对应一个实例。</strong><br><br><strong>Spring配置使用：Bean作用域</strong><br>　　Scop称为域，在springioc中指创建的Bean对象相对于其他Bean对象请求可见范围，在SpringIoc中有以下作用域：<br>1.基本作用域：reques、prototype<br>2.web作用域：request、session、globalsession<br>3.自定义作用域<br><br>配置文件中定义方式如下：<br><code>&lt;bean id=&quot;cardId&quot; class=&quot;com.hrt.biz.CardId&quot; scope=&quot;xxx&quot;&gt;</code>  </p>
-<h1 id="基本作用域："><a href="#基本作用域：" class="headerlink" title="基本作用域："></a>基本作用域：</h1><h2 id="singleton-单例"><a href="#singleton-单例" class="headerlink" title="singleton,单例"></a>singleton,单例</h2><p>　　在每个spring Ioc容器中有且只有一个实例，而且其完正生命周期完全由Spring容器管理。对于所有获取该bean的操作spring容器将只返回同一个bean。若一个bean未指定scope属性，默认也是singleton。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;animals&quot; class=&quot;com.demo.Animals&quot; scope=&quot;singleton&quot; /&gt;</div><div class="line">String location = ... </div><div class="line">ApplicationContext factory = new FileSystemXmlApplicationContext(location); </div><div class="line">Animals animals = (Animals) factory.getBean(&quot;animals&quot;); // 获取 Bean </div><div class="line">Animals animals2 = (Animals) factory.getBean(&quot;animals&quot;); </div><div class="line">System.out.println(animals); System.out.println(animals2);</div><div class="line">//输出结果：</div><div class="line">//com.demo.Animals@2151b0a5 </div><div class="line">//com.demo.Animals@2151b0a5</div></pre></td></tr></table></figure></p>
-<h2 id="prototype，原型作用域"><a href="#prototype，原型作用域" class="headerlink" title="prototype，原型作用域"></a>prototype，原型作用域</h2><p>　　每次向是springIoc容器请求获取Bean都返回一个全新的Bean。相当于singleton来说就是不缓存Bean，每次都是一个根据Bean定义创建的全新Bean。<br><code>&lt;bean id=&quot;animals&quot; class=&quot;com.demo.Animals&quot; scope=&quot;prototype&quot; /&gt;</code>  </p>
-<h1 id="Web基本作用域："><a href="#Web基本作用域：" class="headerlink" title="Web基本作用域："></a>Web基本作用域：</h1><h2 id="request，表示每个请求需要容器创建一个全新Bean"><a href="#request，表示每个请求需要容器创建一个全新Bean" class="headerlink" title="request，表示每个请求需要容器创建一个全新Bean"></a>request，表示每个请求需要容器创建一个全新Bean</h2><p>　　在 <strong>Spring IoC</strong> 容器，即<strong>XmlWebApplicationContext</strong> 会为每个 HTTP 请求创建一个全新的 <strong>RequestPrecessor</strong> 对象。当请求结束后，该对象的生命周期即告结束。当同时有 10 个 HTTP 请求进来的时候，容器会分别针对这 10 个请求创建 10 个全新的 RequestPrecessor 实例，且他们相互之间互不干扰，从不是很严格的意义上说，request 可以看做 prototype 的一种特例，除了场景更加具体之外，语意上差不多。<br><code>&lt;bean id=&quot;animals&quot; class=&quot;com.demo.Animals&quot; scope=&quot;request&quot; /&gt;</code>  </p>
-<h2 id="session域"><a href="#session域" class="headerlink" title="session域"></a>session域</h2><p>　　表示会话需要容器创建一个全新的Bean。比如对于每个用户一般都会有一个会话，该用户的用户信息要存储到会话中，此时，可以将该Bean配置为Web作用域。<br><code>&lt;bean id=&quot;animals&quot; class=&quot;com.demo.Animals&quot; scope=&quot;session&quot; /&gt;</code>  </p>
-<h2 id="globalSession"><a href="#globalSession" class="headerlink" title="globalSession"></a>globalSession</h2><p>　　类似于session作用域，只是其用于portlet环境的web应用。如果在非portlet环境将视为session作用域。</p>
-<h1 id="自定义作用域："><a href="#自定义作用域：" class="headerlink" title="自定义作用域："></a>自定义作用域：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public interface Scope &#123; </div><div class="line">　　// 从作用域中获取Bean， objectFactory 表示当在当前作用域没找到合适Bean时使用它创建一个新的Bean </div><div class="line">　　Object get(String name, ObjectFactory&lt;?&gt; objectFactory); </div><div class="line">　　// 从作用域中移除 Bean </div><div class="line">　　Object remove(String name);</div><div class="line">　　// 用于注册销毁回调，如果想要销毁相应的对象则由Spring容器注册相应的销毁回调，而由自定义作用域选择是不是要销毁相应的对象； </div><div class="line">　　void registerDestructionCallback(String name, Runnable callback); </div><div class="line">　　// 用于解析相应的上下文数据，比如request作用域将返回request中的属性。 </div><div class="line">　　Object resolveContextualObject(String key); </div><div class="line">　　// 作用域的会话标识，比如session作用域将是sessionId。 </div><div class="line">　　String getConversationId(); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class ThreadScope implements Scope &#123; </div><div class="line">    // 用于存放线程中的 Bean </div><div class="line">    private final ThreadLocal&lt;Map&lt;String, Object&gt;&gt; THREAD_SCOPE = new ThreadLocal&lt;Map&lt;String, Object&gt;&gt;() &#123; </div><div class="line">        protected Map&lt;String, Object&gt; initialValue() &#123; </div><div class="line">            return new HashMap&lt;String, Object&gt;(); </div><div class="line">        &#125; </div><div class="line">    &#125;;</div><div class="line">    @Override</div><div class="line">    public Object get(String name, ObjectFactory&lt;?&gt; objectFactory) &#123; </div><div class="line">        Map&lt;String, Object&gt; map = THREAD_SCOPE.get(); </div><div class="line">        if (!map.containsKey(name)) &#123; </div><div class="line">            map.put(name, objectFactory.getObject()); </div><div class="line">        &#125; </div><div class="line">        return map.get(name); </div><div class="line">    &#125;</div><div class="line">@Override</div><div class="line">public Object remove(String name) &#123; </div><div class="line">    Map&lt;String, Object&gt; map = THREAD_SCOPE.get(); </div><div class="line">    return map.remove(name); </div><div class="line">&#125; </div><div class="line">    @Override </div><div class="line">    public void registerDestructionCallback(String name, Runnable callback) &#123;</div><div class="line">     &#125; </div><div class="line">    @Override public Object resolveContextualObject(String key) &#123;</div><div class="line">        return null; </div><div class="line">    &#125;</div><div class="line">    @Override </div><div class="line">    public String getConversationId() &#123; </div><div class="line">        return null; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="属性注册："><a href="#属性注册：" class="headerlink" title="属性注册："></a>属性注册：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!-- CustomScopeConfigurer 的 scopes 属性注册自定义作用域实现 --&gt; </div><div class="line">&lt;bean class=&quot;org.springframework.beans.factory.config.CustomScopeConfigurer&quot;&gt;</div><div class="line">    &lt;property name=&quot;scopes&quot;&gt; </div><div class="line">        &lt;map&gt; </div><div class="line">            &lt;entry key=&quot;thread&quot; &gt; </div><div class="line">                &lt;bean class=&quot;scope.ThreadScope&quot;/&gt; </div><div class="line">            &lt;/entry&gt; </div><div class="line">        &lt;/map&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">&lt;bean id=&quot;animals&quot; class=&quot;com.demo.Animals&quot; scope=&quot;thread&quot;/&gt;</div></pre></td></tr></table></figure>
-<h2 id="验证："><a href="#验证：" class="headerlink" title="验证："></a>验证：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public static void main(String [ ] args) &#123;</div><div class="line">    String location = &quot;WebRoot/WEB-INF/spring-bean.xml&quot;; </div><div class="line">    ApplicationContext factory = new FileSystemXmlApplicationContext(location); </div><div class="line">    // 在 main 线程获取 Bean </div><div class="line">    Animals animals1 = (Animals) factory.getBean(&quot;animals&quot;);</div><div class="line">    Animals animals2 = (Animals) factory.getBean(&quot;animals&quot;); </div><div class="line">    System.out.println(animals1); </div><div class="line">    System.out.println(animals2); </div><div class="line">    // 新建线程获取 Bean </div><div class="line">    Thread thread = new Thread() &#123;</div><div class="line">        public void run() &#123; </div><div class="line">            String location = &quot;WebRoot/WEB-INF/spring-bean.xml&quot;; </div><div class="line">            ApplicationContext factory = new FileSystemXmlApplicationContext(location);</div><div class="line">            Animals animals = (Animals) factory.getBean(&quot;animals&quot;); </div><div class="line">            System.out.println(animals); </div><div class="line">        &#125; </div><div class="line">    &#125;; </div><div class="line">    thread.start();</div><div class="line"></div><div class="line">    // 输出结果：</div><div class="line">    // com.demo.Animals@3ddfd90f</div><div class="line">    // com.demo.Animals@3ddfd90f </div><div class="line">    // com.demo.Animals@153b2cb </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>　　<strong>Spring整合SpringMVC Controller和Struts2Action控制层Bean的默认作用域。</strong><br>　　<strong>spring在整合SpringMVC的时候Controller作用域默认是单例的，Spring在整合Struts2时Action是作用域原型。在配置bean时默认是单例的，对于service和dao层的bean也是使用的单例模式。</strong><br>　　<strong>SpringMvc的Controller数据都是从方法参数传入的，是方法级别的，使用单例模式，所以在没有共享成员变量情况下是线程安全的，应该避免共享成员防止出现线程安全问题。</strong><br>　　<strong>Spring管理的Struts2的Action是原型模式，Action是类级别的，参数可以是成员变量，不存在线程安全问题。</strong></p>
+<p>待续···</p>
 
       
 
@@ -290,15 +248,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">struts2</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">springmvc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">线程安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
         		</li>
       		
 		</ul>
@@ -354,7 +304,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.lixinjiang.cn/2017/11/14/Thread-safe/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.lixinjiang.cn/2017/11/23/JavaScript执行机制/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -368,18 +318,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2017/11/17/oracle优化之标量子查询与left-join/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          oracle优化之标量子查询与left join
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/01/easyui-problem/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">easyui框架datagrid的load不刷新数据</div>
+    <a href="/2017/11/23/pos应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Pos应用与扫盲一路通</div>
       <i class="icon-circle-right"></i>
     </a>
   
