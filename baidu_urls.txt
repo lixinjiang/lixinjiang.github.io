@@ -1,1 +1,7 @@
+http://www.lixinjiang.cn/2017/12/01/Java关键字volatile解析/
 http://www.lixinjiang.cn/2017/11/23/JavaScript执行机制/
+http://www.lixinjiang.cn/2017/11/23/pos应用/
+http://www.lixinjiang.cn/2017/11/17/oracle优化之标量子查询与left-join/
+http://www.lixinjiang.cn/2017/11/14/Thread-safe/
+http://www.lixinjiang.cn/2017/11/01/easyui-problem/
+http://www.lixinjiang.cn/2017/10/30/my-first-blog/
