@@ -8,15 +8,20 @@
   <link rel="dns-prefetch" href="http://www.lixinjiang.cn">
   <title>JavaScript执行机制 | blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="JavaScript执行机制">
+  <meta name="description" content="JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。">
+<meta name="keywords" content="JavaScript执行机制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript执行机制">
 <meta property="og:url" content="http://www.lixinjiang.cn/2017/11/23/JavaScript执行机制/index.html">
 <meta property="og:site_name" content="blog">
+<meta property="og:description" content="JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。">
 <meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
-<meta property="og:updated_time" content="2017-12-19T08:59:59.107Z">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201801101.png">
+<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201801102.png">
+<meta property="og:updated_time" content="2018-01-10T03:15:53.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript执行机制">
+<meta name="twitter:description" content="JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。">
 <meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
   
     <link rel="alternative" href="/atom.xml" title="blog" type="application/atom+xml">
@@ -200,14 +205,190 @@ var _hmt = _hmt || [];
     
 <!-- 目录内容 -->
 
+    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+          <span class="btn-bg"></span>
+          <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#补充"><span class="toc-number">1.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于JavaScript"><span class="toc-number">2.</span> <span class="toc-text">关于JavaScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript事件循环"><span class="toc-number">3.</span> <span class="toc-text">JavaScript事件循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setTimeOut"><span class="toc-number">4.</span> <span class="toc-text">setTimeOut</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setInterval"><span class="toc-number">5.</span> <span class="toc-text">setInterval</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise与process-nextTick-callback"><span class="toc-number">6.</span> <span class="toc-text">Promise与process.nextTick(callback)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">7.</span> <span class="toc-text">最后</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js的异步"><span class="toc-number">7.1.</span> <span class="toc-text">js的异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件循环Event-Loop"><span class="toc-number">7.2.</span> <span class="toc-text">事件循环Event Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript的执行和运行"><span class="toc-number">7.3.</span> <span class="toc-text">javascript的执行和运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setImmediate"><span class="toc-number">7.4.</span> <span class="toc-text">setImmediate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后的最后"><span class="toc-number">7.5.</span> <span class="toc-text">最后的最后</span></a></li></ol></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg" alt="大图"><br><a id="more"></a></p>
+        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg" alt="大图"></p>
 <blockquote>
-<p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。</p>
+<p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。<br><a id="more"></a>  </p>
 </blockquote>
-<p>待续···</p>
+<p>最近读了一篇好文，从原理上理解了JavaScript的执行机制，mark一下加深记忆和翻阅，有兴趣的可以验证一下其中的原理。引用一句话，虽说轮子好，但是我们不仅要知其然，也要知其所以然。当然，JavaScript是很强大的脚本语言，用途广泛，但是作为开发者，对于优秀的语言我们也最好还是能理解其中的原理（虽然写不出来），让我们不仅仅是一个码农。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li>JavaScript是按照语句出现的顺序执行的</li>
+</ul>
+<p>莫慌，看了下面的代码就明白了为什么强调这句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = &apos;1&apos;;</div><div class="line">console.log(a);</div><div class="line">  </div><div class="line">let b = &apos;2&apos;;</div><div class="line">console.log(b);</div></pre></td></tr></table></figure></p>
+<p>让俺们来瞅瞅js执行的过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">setTimeout(function()&#123;</div><div class="line">    console.log(&apos;定时器开始啦&apos;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">new Promise(function(resolve)&#123;</div><div class="line">    console.log(&apos;马上执行for循环啦&apos;);</div><div class="line">    for(var i = 0; i &lt; 10000; i++)&#123;</div><div class="line">        i == 99 &amp;&amp; resolve();</div><div class="line">    &#125;</div><div class="line">&#125;).then(function()&#123;</div><div class="line">    console.log(&apos;执行then函数啦&apos;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">console.log(&apos;代码执行结束&apos;);</div></pre></td></tr></table></figure></p>
+<p>大多数后端人员，依照脑海的js的执行顺序这个理念，写出了如下结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//&quot;定时器开始啦&quot;</div><div class="line">//&quot;马上执行for循环啦&quot;</div><div class="line">//&quot;执行then函数啦&quot;</div><div class="line">//&quot;代码执行结束&quot;</div></pre></td></tr></table></figure></p>
+<p>然鹅，然鹅，然鹅……<br>在chrome上验证，实力打脸了，一脸懵逼。难道不是一行一行执行的吗？  </p>
+<h2 id="关于JavaScript"><a href="#关于JavaScript" class="headerlink" title="关于JavaScript"></a>关于JavaScript</h2><p>JavaScript是一门<strong>单线程</strong>语言，在最新的HTML5中提出了Web-Worker，但JavaScript是单线程这一核心仍然没有改变。<br>划重点了：<br><strong>所以一切JavaScript版的“多线程”都是单线程模拟出来的，一切JavaScript多线程都是纸老虎。</strong></p>
+<h2 id="JavaScript事件循环"><a href="#JavaScript事件循环" class="headerlink" title="JavaScript事件循环"></a>JavaScript事件循环</h2><p>既然js是单线程，那就像只有一个窗口的银行，客户需要排队一个一个办理业务，同理js任务也要一个一个顺序执行。如果一个任务耗时过长，那么后一个任务也必须等着。那么问题来了，假如我们想浏览新闻，但是新闻包含的超清图片加载很慢，难道我们的网页要一直卡着直到图片完全显示出来？因此聪明的程序员将任务分为两类：  </p>
+<ul>
+<li>同步任务  </li>
+<li>异步任务</li>
+</ul>
+<p>当我们打开网站时，网页的渲染过程就是一大堆同步任务，比如页面骨架和页面元素的渲染。而像加载图片音乐之类占用资源大耗时久的任务，就是异步任务。关于这部分有严格的文字定义，但本文的目的是用最小的学习成本彻底弄懂执行机制，所以我们用导图来说明：<br><img src="http://oyw3pbvc2.bkt.clouddn.com/201801101.png" alt="导图"><br>导图要表达的内容用文字来表述的话：  </p>
+<ul>
+<li>同步和异步任务分别进入不同的执行”场所”，同步的进入主线程，异步的进入Event Table并注册函数。</li>
+<li>当指定的事情完成时，Event Table会将这个函数移入Event Queue。</li>
+<li>主线程内的任务执行完毕为空，会去Event Queue读取对应的函数，进入主线程执行。</li>
+<li>上述过程会不断重复，也就是常说的Event Loop(事件循环)。  </li>
+</ul>
+<p>如何判断主线程执行栈为空啊？js引擎存在monitoring process进程，会持续不断的检查主线程执行栈是否为空，一旦为空，就会去Event Queue那里检查是否有等待被调用的函数。<br>上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">let data = [];</div><div class="line">$.ajax(&#123;</div><div class="line">    url:www.javascript.com,</div><div class="line">    data:data,</div><div class="line">    success:() =&gt; &#123;</div><div class="line">        console.log(&apos;发送成功!&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">console.log(&apos;代码执行结束&apos;);</div></pre></td></tr></table></figure></p>
+<p>这是一段简单的ajax请求代码：  </p>
+<ul>
+<li>ajax进入Event Table，注册回调函数success。</li>
+<li>执行console.log(‘代码执行结束’)。</li>
+<li>ajax事件完成，回调函数success进入Event Queue。</li>
+<li>主线程从Event Queue读取回调函数success并执行。</li>
+</ul>
+<h2 id="setTimeOut"><a href="#setTimeOut" class="headerlink" title="setTimeOut"></a>setTimeOut</h2><p>大名鼎鼎的setTimeout无需再多言，大家对他的第一印象就是异步可以延时执行，我们经常这么实现延时3秒执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">    console.log(&apos;延时3秒&apos;);</div><div class="line">&#125;,3000)</div></pre></td></tr></table></figure></p>
+<p>渐渐的setTimeout用的地方多了，问题也出现了，有时候明明写的延时3秒，实际却5，6秒才执行函数，这又咋回事啊？<br>举个栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">    task();</div><div class="line">&#125;,3000)</div><div class="line">console.log(&apos;执行console&apos;);</div></pre></td></tr></table></figure></p>
+<p>根据前面我们的结论，setTimeout是异步的，应该先执行console.log这个同步任务，所以我们的结论是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//执行console</div><div class="line">//task()</div></pre></td></tr></table></figure></p>
+<p>去验证一下，结果正确！<br>然后我们修改一下前面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">    task()</div><div class="line">&#125;,3000)</div><div class="line"></div><div class="line">sleep(10000000)</div></pre></td></tr></table></figure></p>
+<p>关于setTimeout要补充的是，即便主线程为空，0毫秒实际上也是达不到的。根据HTML的标准，最低是4毫秒。有兴趣的同学可以自行了解。  </p>
+<h2 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval"></a>setInterval</h2><p>上面说完了setTimeout，当然不能错过它的孪生兄弟setInterval。他俩差不多，只不过后者是循环的执行。对于执行顺序来说，setInterval会每隔指定的时间将注册的函数置入Event Queue，如果前面的任务耗时太久，那么同样需要等待。<br>唯一需要注意的一点是，对于setInterval(fn,ms)来说，我们已经知道不是每过ms秒会执行一次fn，而是每过ms秒，会有fn进入Event Queue。一旦setInterval的回调函数fn执行时间超过了延迟时间ms，那么就完全看不出来有时间间隔了。这句话请仔细品味。  </p>
+<h2 id="Promise与process-nextTick-callback"><a href="#Promise与process-nextTick-callback" class="headerlink" title="Promise与process.nextTick(callback)"></a>Promise与process.nextTick(callback)</h2><p>传统的定时器我们已经研究过了，接着我们探究Promise与process.nextTick(callback)的表现。<br>Promise的定义和功能本文不再赘述，不了解的读者可以学习一下阮一峰老师的Promise。而process.nextTick(callback)类似node.js版的”setTimeout”，在事件循环的下一次循环中调用 callback 回调函数。<br>我们进入正题，除了广义的同步任务和异步任务，我们对任务有更精细的定义：  </p>
+<ul>
+<li>macro-task(宏任务)：包括整体代码script，setTimeout，setInterval</li>
+<li>micro-task(微任务)：Promise，process.nextTick</li>
+</ul>
+<p>不同类型的任务会进入对应的Event Queue，比如setTimeout和setInterval会进入相同的Event Queue。<br>事件循环的顺序，决定js代码的执行顺序。进入整体代码(宏任务)后，开始第一次循环。接着执行所有的微任务。然后再次从宏任务开始，找到其中一个任务队列执行完毕，再执行所有的微任务。听起来有点绕，我们用文章最开始的一段代码说明:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;setTimeout&apos;);</div><div class="line">&#125;)</div><div class="line"></div><div class="line">new Promise(function(resolve) &#123;</div><div class="line">    console.log(&apos;promise&apos;);</div><div class="line">&#125;).then(function() &#123;</div><div class="line">    console.log(&apos;then&apos;);</div><div class="line">&#125;)</div><div class="line"></div><div class="line">console.log(&apos;console&apos;);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>这段代码作为宏任务，进入主线程。</li>
+<li>先遇到setTimeout，那么将其回调函数注册后分发到宏任务Event Queue。(注册过程与上同，下文不再描述)</li>
+<li>接下来遇到了Promise，new Promise立即执行，then函数分发到微任务Event Queue。</li>
+<li>遇到console.log()，立即执行。</li>
+<li>好啦，整体代码script作为第一个宏任务执行结束，看看有哪些微任务？我们发现了then在微任务Event Queue里面，执行。</li>
+<li>ok，第一轮事件循环结束了，我们开始第二轮循环，当然要从宏任务Event Queue开始。我们发现了宏任务Event Queue中setTimeout对应的回调函数，立即执行。</li>
+<li>结束。</li>
+</ul>
+<p>事件循环，宏任务，微任务的关系如图所示：<br><img src="http://oyw3pbvc2.bkt.clouddn.com/201801102.png" alt=""><br>我们来分析一段较复杂的代码，看看你是否真的掌握了js的执行机制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;1&apos;);</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;2&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;3&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;4&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;5&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line">process.nextTick(function() &#123;</div><div class="line">    console.log(&apos;6&apos;);</div><div class="line">&#125;)</div><div class="line">new Promise(function(resolve) &#123;</div><div class="line">    console.log(&apos;7&apos;);</div><div class="line">    resolve();</div><div class="line">&#125;).then(function() &#123;</div><div class="line">    console.log(&apos;8&apos;)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;9&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;10&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;11&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;12&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>第一轮事件循环流程分析如下：  </p>
+<ul>
+<li>整体script作为第一个宏任务进入主线程，遇到console.log，输出1。</li>
+<li>遇到setTimeout，其回调函数被分发到宏任务Event Queue中。我们暂且记为setTimeout1。</li>
+<li>遇到process.nextTick()，其回调函数被分发到微任务Event Queue中。我们记为process1。</li>
+<li>遇到Promise，new Promise直接执行，输出7。then被分发到微任务Event Queue中。我们记为then1。</li>
+<li>又遇到了setTimeout，其回调函数被分发到宏任务Event Queue中，我们记为setTimeout2。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">宏任务Event Queue</th>
+<th style="text-align:center">微任务Event Queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">setTimeout1</td>
+<td style="text-align:center">process1</td>
+</tr>
+<tr>
+<td style="text-align:center">setTimeout2</td>
+<td style="text-align:center">process2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>上表是第一轮事件循环宏任务结束时各Event Queue的情况，此时已经输出了1和7。</li>
+<li>我们发现了process1和then1两个微任务。</li>
+<li>执行process1,输出6。</li>
+<li>执行then1，输出8。</li>
+</ul>
+<p>好了，第一轮事件循环正式结束，这一轮的结果是输出1，7，6，8。那么第二轮时间循环从setTimeout1宏任务开始：  </p>
+<ul>
+<li>首先输出2。接下来遇到了process.nextTick()，同样将其分发到微任务Event Queue中，记为process2。new Promise立即执行输出4，then也分发到微任务Event Queue中，记为then2。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">宏任务Event Queue</th>
+<th style="text-align:center">微任务Event Queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">setTimeout2</td>
+<td style="text-align:center">process2</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">then2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>第二轮事件循环宏任务结束，我们发现有process2和then2两个微任务可以执行。</li>
+<li>输出3。</li>
+<li>输出5。</li>
+<li>第二轮事件循环结束，第二轮输出2，4，3，5。</li>
+<li>第三轮事件循环开始，此时只剩setTimeout2了，执行。</li>
+<li>直接输出9。</li>
+<li>将process.nextTick()分发到微任务Event Queue中。记为process3。</li>
+<li>直接执行new Promise，输出11。</li>
+<li>将then分发到微任务Event Queue中，记为then3。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">宏任务Event Queue</th>
+<th style="text-align:center">微任务Event Queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">setTimeout2</td>
+<td style="text-align:center">process2</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">then2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>第三轮事件循环宏任务执行结束，执行两个微任务process3和then3。</li>
+<li>输出10。</li>
+<li>输出12。</li>
+<li>第三轮事件循环结束，第三轮输出9，11，10，12。</li>
+</ul>
+<p>整段代码，共进行了三次事件循环，完整的输出为1，7，6，8，2，4，3，5，9，11，10，12。<br>(请注意，node环境下的事件监听依赖libuv与前端环境不完全相同，输出顺序可能会有误差)</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><h3 id="js的异步"><a href="#js的异步" class="headerlink" title="js的异步"></a>js的异步</h3><p>我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。</p>
+<h3 id="事件循环Event-Loop"><a href="#事件循环Event-Loop" class="headerlink" title="事件循环Event Loop"></a>事件循环Event Loop</h3><p>事件循环是js实现异步的一种方法，也是js的执行机制。</p>
+<h3 id="javascript的执行和运行"><a href="#javascript的执行和运行" class="headerlink" title="javascript的执行和运行"></a>javascript的执行和运行</h3><p>执行和运行有很大的区别，javascript在不同的环境下，比如node，浏览器，Ringo等等，执行方式是不同的。而运行大多指javascript解析引擎，是统一的。</p>
+<h3 id="setImmediate"><a href="#setImmediate" class="headerlink" title="setImmediate"></a>setImmediate</h3><p>微任务和宏任务还有很多种类，比如setImmediate等等，执行都是有共同点的，有兴趣的同学可以自行了解。</p>
+<h3 id="最后的最后"><a href="#最后的最后" class="headerlink" title="最后的最后"></a>最后的最后</h3><ul>
+<li>javascript是一门单线程语言</li>
+<li>Event Loop是javascript的执行机制</li>
+</ul>
+<p>牢牢把握两个基本点，以认真学习javascript为中心，早日实现成为前端高手的伟大梦想！</p>
+<blockquote>
+<p>本文首发于：<a href="http://www.lixinjiang.cn/">Xinjiang的博客</a>不做商业用途<br>地址为：<a href="http://www.lixinjiang.cn/2018/01/02/Oracle分页查询数据重复与不稳定解决方案/">http://lixinjiang.cn/2018/01/02/Oracle分页查询数据重复与不稳定解决方案/</a><br>原文出自：<a href="https://juejin.im/post/59e85eebf265da430d571f89" target="_blank" rel="external">掘金网</a></p>
+</blockquote>
 
       
 
@@ -468,10 +649,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -493,6 +670,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">easyui</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
               </li>
              
               <li class="article-tag-list-item">
