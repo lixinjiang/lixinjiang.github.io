@@ -15,14 +15,14 @@
 <meta property="og:url" content="http://www.lixinjiang.cn/2017/11/23/JavaScript执行机制/index.html">
 <meta property="og:site_name" content="blog">
 <meta property="og:description" content="JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201801101.png">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201801102.png">
-<meta property="og:updated_time" content="2018-01-10T03:15:53.128Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/26/ZeE7a8.md.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZnSLxP.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/Znpi2q.png">
+<meta property="og:updated_time" content="2019-06-27T02:34:35.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript执行机制">
 <meta name="twitter:description" content="JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。">
-<meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/06/26/ZeE7a8.md.jpg">
   
     <link rel="alternative" href="/atom.xml" title="blog" type="application/atom+xml">
   
@@ -232,7 +232,8 @@ var _hmt = _hmt || [];
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg" alt="大图"></p>
+        <!-- 七牛云地址 ![大图](http://oyw3pbvc2.bkt.clouddn.com/201711237.jpg)-->
+<p><img src="https://s2.ax1x.com/2019/06/26/ZeE7a8.md.jpg" alt="大图"></p>
 <blockquote>
 <p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。<br><a id="more"></a>  </p>
 </blockquote>
@@ -250,7 +251,7 @@ var _hmt = _hmt || [];
 <li>同步任务  </li>
 <li>异步任务</li>
 </ul>
-<p>当我们打开网站时，网页的渲染过程就是一大堆同步任务，比如页面骨架和页面元素的渲染。而像加载图片音乐之类占用资源大耗时久的任务，就是异步任务。关于这部分有严格的文字定义，但本文的目的是用最小的学习成本彻底弄懂执行机制，所以我们用导图来说明：<br><img src="http://oyw3pbvc2.bkt.clouddn.com/201801101.png" alt="导图"><br>导图要表达的内容用文字来表述的话：  </p>
+<p>当我们打开网站时，网页的渲染过程就是一大堆同步任务，比如页面骨架和页面元素的渲染。而像加载图片音乐之类占用资源大耗时久的任务，就是异步任务。关于这部分有严格的文字定义，但本文的目的是用最小的学习成本彻底弄懂执行机制，所以我们用导图来说明：<br><a href="!--![导图](http://oyw3pbvc2.bkt.clouddn.com/201801101.png)--">!--![导图](http://oyw3pbvc2.bkt.clouddn.com/201801101.png)--</a><br><img src="https://s2.ax1x.com/2019/06/27/ZnSLxP.png" alt="导图"><br>导图要表达的内容用文字来表述的话：  </p>
 <ul>
 <li>同步和异步任务分别进入不同的执行”场所”，同步的进入主线程，异步的进入Event Table并注册函数。</li>
 <li>当指定的事情完成时，Event Table会将这个函数移入Event Queue。</li>
@@ -286,7 +287,7 @@ var _hmt = _hmt || [];
 <li>ok，第一轮事件循环结束了，我们开始第二轮循环，当然要从宏任务Event Queue开始。我们发现了宏任务Event Queue中setTimeout对应的回调函数，立即执行。</li>
 <li>结束。</li>
 </ul>
-<p>事件循环，宏任务，微任务的关系如图所示：<br><img src="http://oyw3pbvc2.bkt.clouddn.com/201801102.png" alt=""><br>我们来分析一段较复杂的代码，看看你是否真的掌握了js的执行机制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;1&apos;);</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;2&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;3&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;4&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;5&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line">process.nextTick(function() &#123;</div><div class="line">    console.log(&apos;6&apos;);</div><div class="line">&#125;)</div><div class="line">new Promise(function(resolve) &#123;</div><div class="line">    console.log(&apos;7&apos;);</div><div class="line">    resolve();</div><div class="line">&#125;).then(function() &#123;</div><div class="line">    console.log(&apos;8&apos;)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;9&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;10&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;11&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;12&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>事件循环，宏任务，微任务的关系如图所示：<br>!<a href="--![](http://oyw3pbvc2.bkt.clouddn.com/201801102.png)--">--![](http://oyw3pbvc2.bkt.clouddn.com/201801102.png)--</a><br><img src="https://s2.ax1x.com/2019/06/27/Znpi2q.png" alt=""><br>我们来分析一段较复杂的代码，看看你是否真的掌握了js的执行机制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;1&apos;);</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;2&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;3&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;4&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;5&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line">process.nextTick(function() &#123;</div><div class="line">    console.log(&apos;6&apos;);</div><div class="line">&#125;)</div><div class="line">new Promise(function(resolve) &#123;</div><div class="line">    console.log(&apos;7&apos;);</div><div class="line">    resolve();</div><div class="line">&#125;).then(function() &#123;</div><div class="line">    console.log(&apos;8&apos;)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">setTimeout(function() &#123;</div><div class="line">    console.log(&apos;9&apos;);</div><div class="line">    process.nextTick(function() &#123;</div><div class="line">        console.log(&apos;10&apos;);</div><div class="line">    &#125;)</div><div class="line">    new Promise(function(resolve) &#123;</div><div class="line">        console.log(&apos;11&apos;);</div><div class="line">        resolve();</div><div class="line">    &#125;).then(function() &#123;</div><div class="line">        console.log(&apos;12&apos;)</div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
 <p>第一轮事件循环流程分析如下：  </p>
 <ul>
 <li>整体script作为第一个宏任务进入主线程，遇到console.log，输出1。</li>
@@ -557,7 +558,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Xinjiang Li
+    		&copy; 2019 Xinjiang Li
     	</div>
 		<div class="footer-right">
 			<a href="https://hexo.io" target="_blank">Hexo</a>  Theme
@@ -568,7 +569,8 @@ var _hmt = _hmt || [];
   <span id="busuanzi_container_site_pv" style="display: inline;">本站访客数<span id="busuanzi_value_site_pv"></span>次</span>
   <span id="busuanzi_container_page_pv" style="display: inline;">本文总阅读量<span id="busuanzi_value_page_pv"></span>次</span>
   <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>-->
+  <script type="text/javascript" src="busuanzi.js"></script>
  </footer>
     </div>
     <script>
@@ -645,15 +647,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -673,7 +679,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">运维</a>
               </li>
              
               <li class="article-tag-list-item">

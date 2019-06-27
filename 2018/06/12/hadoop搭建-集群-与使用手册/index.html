@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.lixinjiang.cn">
-  <title>Tag: Java | blog</title>
+  <title>hadoop搭建(集群)与使用手册 | blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="blog">
-<meta property="og:url" content="http://www.lixinjiang.cn/tags/Java/index.html">
+  <meta name="description" content="(大数据基础、上层组件图)大数据hadoop组件由底层的hadoop核心构件和上层的Hadoop生态系统共同集成，而上层的生态系统是基于下层的存储和计算来完成的。就学习的过程来说，搭建一个完整的开发环境和集群、熟悉基本操作是必要而且很好的开端，本文将带你轻松地搭建Hadop开发环境。">
+<meta name="keywords" content="hadoop集群搭建、大数据核心组件、hadoop常用命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop搭建(集群)与使用手册">
+<meta property="og:url" content="http://www.lixinjiang.cn/2018/06/12/hadoop搭建-集群-与使用手册/index.html">
 <meta property="og:site_name" content="blog">
+<meta property="og:description" content="(大数据基础、上层组件图)大数据hadoop组件由底层的hadoop核心构件和上层的Hadoop生态系统共同集成，而上层的生态系统是基于下层的存储和计算来完成的。就学习的过程来说，搭建一个完整的开发环境和集群、熟悉基本操作是必要而且很好的开端，本文将带你轻松地搭建Hadop开发环境。">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZmTwnI.png">
+<meta property="og:updated_time" content="2019-06-27T02:05:36.831Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="blog">
+<meta name="twitter:title" content="hadoop搭建(集群)与使用手册">
+<meta name="twitter:description" content="(大数据基础、上层组件图)大数据hadoop组件由底层的hadoop核心构件和上层的Hadoop生态系统共同集成，而上层的生态系统是基于下层的存储和计算来完成的。就学习的过程来说，搭建一个完整的开发环境和集群、熟悉基本操作是必要而且很好的开端，本文将带你轻松地搭建Hadop开发环境。">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/06/27/ZmTwnI.png">
   
     <link rel="alternative" href="/atom.xml" title="blog" type="application/atom+xml">
   
@@ -176,64 +183,192 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-hadoop搭建-集群-与使用手册" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/01/Java关键字volatile解析/" class="archive-article-date">
-  	<time datetime="2017-12-01T03:05:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/01/Java关键字volatile解析/">Java关键字volatile解析</a>
+    <h1 class="article-title" itemprop="name">
+      hadoop搭建(集群)与使用手册
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/06/12/hadoop搭建-集群-与使用手册/" class="archive-article-date">
+  	<time datetime="2018-06-12T06:09:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-12</time>
+</a>
+        
+      </header>
+    
+<!-- 目录内容 -->
+
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--七牛云图片地址 ![hadoop_pic](http://oyw3pbvc2.bkt.clouddn.com/hadoop_20180612.png) -->
+<p><img src="https://s2.ax1x.com/2019/06/27/ZmTwnI.png" alt="hadoop_pic"><br>(大数据基础、上层组件图)<br><strong><em>大数据</em></strong><br>hadoop组件由底层的hadoop核心构件和上层的Hadoop生态系统共同集成，而上层的生态系统是基于下层的存储和计算来完成的。<br>就学习的过程来说，搭建一个完整的开发环境和集群、熟悉基本操作是必要而且很好的开端，本文将带你轻松地搭建Hadop开发环境。</p>
+<hr>
+<a id="more"></a>
+<p>##一、搭建环境准备##<br>四台机器：（centos7）hadoop1,hadoop2,hadoop3,hadoop4</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你支持我买服务器<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubaozhifu.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinzhifu.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hadoop</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">线程同步</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">运维</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.lixinjiang.cn/2018/06/12/hadoop搭建-集群-与使用手册/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/01/02/Oracle分页查询数据重复与不稳定解决方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Oracle分页查询数据重复与不稳定解决方案</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -262,9 +397,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,

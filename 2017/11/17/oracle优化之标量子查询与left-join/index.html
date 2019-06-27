@@ -15,15 +15,15 @@
 <meta property="og:url" content="http://www.lixinjiang.cn/2017/11/17/oracle优化之标量子查询与left-join/index.html">
 <meta property="og:site_name" content="blog">
 <meta property="og:description" content="oracle优化之标量子查询、left join">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711173.jpg">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/20171117.png">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711171.png">
-<meta property="og:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711172.png">
-<meta property="og:updated_time" content="2017-12-19T09:01:53.768Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZmLT1S.md.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZmjKwd.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZmLHXQ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/06/27/ZmL76g.png">
+<meta property="og:updated_time" content="2019-06-27T02:41:56.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle优化之标量子查询与left join">
 <meta name="twitter:description" content="oracle优化之标量子查询、left join">
-<meta name="twitter:image" content="http://oyw3pbvc2.bkt.clouddn.com/201711173.jpg">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/06/27/ZmLT1S.md.jpg">
   
     <link rel="alternative" href="/atom.xml" title="blog" type="application/atom+xml">
   
@@ -233,18 +233,14 @@ var _hmt = _hmt || [];
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://oyw3pbvc2.bkt.clouddn.com/201711173.jpg" alt="大图"><br><strong>oracle优化之标量子查询、left join</strong></p>
+        <!-- ![大图](http://oyw3pbvc2.bkt.clouddn.com/201711173.jpg)-->
+<p><img src="https://s2.ax1x.com/2019/06/27/ZmLT1S.md.jpg" alt="大图"><br><strong>oracle优化之标量子查询、left join</strong></p>
 <hr>
 <a id="more"></a>
 <p>（注：采用MarkdownPad编辑器，对hexo表格语法研究还不是很深，加入表格后，多行代码插入无效，所以全采用单行代码导致不够美观，需要验证的sql语句可复制下来在sqldeveloper中或者其他工具美化后再阅读）<br>本文是阅读相关书籍和博客结合项目中遇到的问题总结，不足之处或有疑问处还望指出，共同交流，抱拳(^_^==)。</p>
-<h2 id="标量子查询"><a href="#标量子查询" class="headerlink" title="标量子查询"></a>标量子查询</h2><p>举个栗子：</p>
-<pre><code>select empno,
-       ename,
-       sal,
-       deptno,
-       (select d.dname from dept d where d.deptno = e.deptno) as dname
-  from emp e;
-</code></pre><p><img src="http://oyw3pbvc2.bkt.clouddn.com/20171117.png" alt="执行计划"><br>通过执行计划可以看到，标量子查询中的语句实际是执行：<br><code>select d.dname from dept d where d.deptno = :B1</code><br>只是针对emp的每一行，：B1取值不同，这时执行计划只有这一种。等价于<br><code>e left join d</code><br>验证：<br><code>insert into emp (empno, deptno) values (9999, null);</code><br>这时上面的查询数据会返回十五条数据：</p>
+<h2 id="标量子查询"><a href="#标量子查询" class="headerlink" title="标量子查询"></a>标量子查询</h2><p>举个栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">select empno,</div><div class="line">       ename,</div><div class="line">       sal,</div><div class="line">       deptno,</div><div class="line">       (select d.dname from dept d where d.deptno = e.deptno) as dname</div><div class="line">  from emp e;</div></pre></td></tr></table></figure></p>
+<!-- ![执行计划](http://oyw3pbvc2.bkt.clouddn.com/20171117.png)   -->  
+<p><img src="https://s2.ax1x.com/2019/06/27/ZmjKwd.png" alt="执行计划"><br>通过执行计划可以看到，标量子查询中的语句实际是执行：<br><code>select d.dname from dept d where d.deptno = :B1</code><br>只是针对emp的每一行，：B1取值不同，这时执行计划只有这一种。等价于<br><code>e left join d</code><br>验证：<br><code>insert into emp (empno, deptno) values (9999, null);</code><br>这时上面的查询数据会返回十五条数据：</p>
 <table>
 <thead>
 <tr>
@@ -286,10 +282,10 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>因为当emp.deptno为空时，标量子查询查不到数据,所以等价于:<br><code>select e.empno,e.ename,e.sal,e.deptno,d.dname from emp e left join dept d on (d.deptno=e.deptno);</code><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711171.png" alt="执行计划"><br>执行的是HASH JOIN计划，可以更改执行计划，<br><code>SELECT /*+ use_nl(e,d) */
+<p>因为当emp.deptno为空时，标量子查询查不到数据,所以等价于:<br><code>select e.empno,e.ename,e.sal,e.deptno,d.dname from emp e left join dept d on (d.deptno=e.deptno);</code><br><!-- ![执行计划](http://oyw3pbvc2.bkt.clouddn.com/201711171.png) --><br><img src="https://s2.ax1x.com/2019/06/27/ZmLHXQ.png" alt="执行计划"><br>执行的是HASH JOIN计划，可以更改执行计划，<br><code>SELECT /*+ use_nl(e,d) */
     e.empno,e.ename,e.sal,e.deptno,d.dname
         FROM emp e
-        LEFT JOIN dept d ON (d.deptno = e.deptno);</code><br><img src="http://oyw3pbvc2.bkt.clouddn.com/201711172.png" alt="执行计划"><br>可以看到，改成了JOIN后有两种PLAN可供选择，这样优化的余地就大了一些。<br>改写成LEFT JOIN后，PLAN里会显示OUTER关键字，如果PLAN里没有这个关键字，就需要注意是否改写错了。</p>
+        LEFT JOIN dept d ON (d.deptno = e.deptno);</code><br><!-- ![执行计划](http://oyw3pbvc2.bkt.clouddn.com/201711172.png)  --><br><img src="https://s2.ax1x.com/2019/06/27/ZmL76g.png" alt="执行计划"><br>可以看到，改成了JOIN后有两种PLAN可供选择，这样优化的余地就大了一些。<br>改写成LEFT JOIN后，PLAN里会显示OUTER关键字，如果PLAN里没有这个关键字，就需要注意是否改写错了。</p>
 <h2 id="使用LEFT-JOIN优化标量子查询"><a href="#使用LEFT-JOIN优化标量子查询" class="headerlink" title="使用LEFT JOIN优化标量子查询"></a>使用LEFT JOIN优化标量子查询</h2><p>建议：如果未经测试，尽量不要使用标量子查询，特别是多次访问同一个表的时候，标量子查询使用后，会发现其实是一个基于left join的查询，会出现查询数据不准确的情况，而且数据大的时候，会出现查询的性能问题。<br><code>SELECT s.sid,s.sname,s.shot,s.stype,</code><br><code>(SELECT a.aid FROM a WHERE a.aid = s.aids) aid,</code><br><code>(SELECT a.aname FROM a WHERE a.aid = s.aids) aname</code><br><code>(SELECT a.atime FROM a WHERE a.aid = s.aids) aatime</code><br><code>FROM s</code><br>可以看到，在改标量子查询中，对a表访问了三次，而且关联条件一样。对于这种查询，一般直接改为LEFT JOIN的方式：<br><code>SELECT s.sid,s.sname,s.shot,s.stype,a.aid,a.aname,a.aatime FROM s LEFT JOION a ON (a.aid = s.aids)</code><br>改为LEFT JOIN后，原关联条件(a.aid=s.aids)直接作为JOIN条件即可。</p>
 <h2 id="用LEFT-JOIN优化标量子查询之聚合改写"><a href="#用LEFT-JOIN优化标量子查询之聚合改写" class="headerlink" title="用LEFT JOIN优化标量子查询之聚合改写"></a>用LEFT JOIN优化标量子查询之聚合改写</h2><p>下列语句的标量子查询中有sum:<br><code>select d.department_id,d.department_name,d.location_id,nvl(</code><br><code>(select sum(e.salary) from hr.employees e where e.department_id = d.department_id),0) as sum_sal</code><br><code>) from hr.departments d</code><br>如果有如上的那样的语句，肯定会报错的。<br><code>select d.department_id,d.department_name,d.location_id,nvl(sum(e.sum_sal),0) as sum_sal from hr.departments d left join hr.employees e on ( e.department_id = d.department_id);ORA-0094:&quot;E&quot;.&quot;SUM_SAL&quot;:标识符无效</code><br>a.要先分组汇总改成内联视图，GROUP BY后面的列就是关联列（department_id）。原标量子查询改写为：<br><code>select e.department_id,sum(e.salary) as sum_sal from hr.employees e group by e.department_id</code><br>b.要左联改写后的内联视图：<br><code>SELECT d.department_id,</code><br><code>d.department_name,</code><br><code>d.location_id,</code><br><code>nvl(e.sum_sal,0) AS sum_sal</code><br><code>FROM hr.departments d</code><br><code>LEFT JOIN (SELECT e.department_id,SUM(e.salary) AS sum_sal</code><br><code>FROM hr.employee e</code><br>    <code>GROUP BY e.deparment_id) e ON (e.department_id =</code><br><code>d.department_id);</code><br>注意：<br>a&gt;除非能根据业务逻辑判断使用INNER JOIN,否则标量子查询改写为JOIN时都要改写为LEFT JOIN。<br>b&gt;如果需要GROUP BY,要注意：先汇总，后关联。<br>观察更改前后的执行计划可以分辨出结果。熟悉执行计划的，可以对比改写前后的执行计划，不熟悉的可以对比改写前后的执行时间，注意的是，以返回所有数据的时间为准，而不是PL/SQL里只返回前几行的时间。  </p>
 <h2 id="使用LEFT-JOIN及行转列优化标量子查询"><a href="#使用LEFT-JOIN及行转列优化标量子查询" class="headerlink" title="使用LEFT JOIN及行转列优化标量子查询"></a>使用LEFT JOIN及行转列优化标量子查询</h2><p>需求：多个标量访问一个表，但是返回的是同一个列的值，只是条件不一样。<br><code>SELECT /*省略部分返回列*/</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;1&#39; and f2.umum = f4101.imuoml )as m3,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;2&#39; and f2.umum = f4101.imuoml )as kg,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;3&#39; and f2.umum = f4101.imuoml )as kn,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;4&#39; and f2.umum = f4101.imuoml )as mh,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;5&#39; and f2.umum = f4101.imuoml )as ml,</code><br><code>(select round(v,2) from f2 where f2.unitm = f4101.imitm and m = &#39;6&#39; and f2.umum = f4101.imuoml )as mw,</code><br><code>(select max(bpuprc)/10000 from f4016 where trim(bpmcu) = &#39;zx10&#39; and bpcrcd = &#39;cny&#39; and f4106.bplitm = f4101.imlitm ) bpuprc from</code><br><code>f4101,f4102 where f4101.imitm = f4102.ibitm and f4101.imlitm=f4102.iblitm and ibmcu &lt;&gt; &#39;    zx10&#39; and imdscl not like &#39;%取消%&#39; and</code><br><code>(imsrp5 in (&#39;1&#39;,&#39;6&#39;) or imsrp3 in(&#39;37&#39;,&#39;38&#39;) or iblitm in (&#39;506000040&#39;) and trim(ibmcu) = &#39;sf10&#39;);</code><br>可看出在这个查询里面，通过标量子查询对F4101访问了6次，这里即使不考虑CBO计划的对错，仅是六次的查询如果是大表，也绝对会让人崩溃。上面这几个标量子查询关联条件都一样，所以可以先合并成为一个内联视图，再用left join。<br>几个标量子查询除访问的表（F2）Y与关联条件外，至于m的取值不同。为了使用一个子查询把这些列需要的数据都查出来，则需要使用到CASE WHEN 语句，那么这几个标量子查询合并后的语句就是：<br><code>select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then row(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then row(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then row(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then row(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then row(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then row(v,2) end) as mw,</code><br><code>from f2</code><br><code>group by umitm,umum</code><br>f2中的列umitm、umum都是关联列，所以都需要再子查询中列出，以便进行关联。<br>把上面的这个语句作为内联视图与主表进行关联，ON后面直接放关联条件（f2.umitm=f4101.imitm and f2.umum = f4101.imuomi）,就是以下语句：<br><code>select /*省略部分返回列*/</code><br><code>from f4101</code><br><code>inner join f4102 on (f4101.imitm = f4102.ibitm and f4101.imlitm = f4102.iblitm)</code><br><code>left join (select umitm,</code><br><code>umum,</code><br><code>max(case when m = &#39;1&#39; then round(v,2) end) as m3,</code><br><code>max(case when m = &#39;2&#39; then round(v,2) end) as kg,</code><br><code>max(case when m = &#39;3&#39; then round(v,2) end) as kn,</code><br><code>max(case when m = &#39;4&#39; then round(v,2) end) as mh,</code><br><code>max(case when m = &#39;5&#39; then round(v,2) end) as ml,</code><br><code>max(case when m = &#39;6&#39; then round(v,2) end) as mw</code><br><code>from f2</code><br><code>group by umitm,umum) f2 on(f2.umitm=f4101.imitm and f2.umum</code><br><code>=f4101.imuoml)</code><br><code>left join(select bplitm,max(bpuprc) / 10000 as bpuprc</code><br><code>from f4106</code><br><code>where trim(bpmcu) = &#39;zx10&#39;</code><br><code>and bpcrcd = &#39;cny&#39;</code><br><code>group by bplitm) f4101 on f4106.bplitm = f4101.imlitm</code><br><code>where ibmcu &lt;&gt; &#39;   zx10&#39;</code><br><code>and imdscl not like &#39;%取消%&#39;</code><br><code>and (imsrp5 in(&#39;1&#39;,&#39;6&#39;) or imsrp3 in (&#39;37&#39;,&#39;38&#39;) or</code><br><code>iblitm in (&#39;506000040&#39;) and trim (ibmcu) = &#39;sf10&#39;);</code><br>测试发现，改后的查询速度由30分钟下降到2分钟。</p>
@@ -528,7 +524,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Xinjiang Li
+    		&copy; 2019 Xinjiang Li
     	</div>
 		<div class="footer-right">
 			<a href="https://hexo.io" target="_blank">Hexo</a>  Theme
@@ -539,7 +535,8 @@ var _hmt = _hmt || [];
   <span id="busuanzi_container_site_pv" style="display: inline;">本站访客数<span id="busuanzi_value_site_pv"></span>次</span>
   <span id="busuanzi_container_page_pv" style="display: inline;">本文总阅读量<span id="busuanzi_value_page_pv"></span>次</span>
   <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>-->
+  <script type="text/javascript" src="busuanzi.js"></script>
  </footer>
     </div>
     <script>
@@ -616,15 +613,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线程同步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,7 +645,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Oracle</a>
+                <a href="javascript:void(0)" class="js-tag color2">hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">运维</a>
               </li>
              
               <li class="article-tag-list-item">
